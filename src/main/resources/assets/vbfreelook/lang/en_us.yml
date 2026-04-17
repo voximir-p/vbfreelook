@@ -6,6 +6,9 @@ config.vbfreelook:
       basic:
         .: Basic
         option:
+          switch_perspective:
+            .: Switch Perspective
+            description: Whether to switch perspective when freelook is activated.
           freelook_perspective:
             .: Freelook Perspective
             description: The perspective you switch to when freelook is activated.
@@ -21,7 +24,6 @@ config.vbfreelook:
 
             smart: |
               §lSmart§r: Tapping behaves like toggle, holding behaves like hold.
-              (See Smart Threshold)
             hold: >
               §lHold§r: You have to hold the key to freelook.
             toggle: >

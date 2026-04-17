@@ -19,9 +19,19 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         }
     }
 
-    private final ConfigEntry<FreelookKeyBehavior> freelookKeyBehavior = register("freelook_key_behavior", FreelookKeyBehavior.SMART, FreelookKeyBehavior.CODEC);
-    private final ConfigEntry<FreelookPerspective> freelookPerspective = register("freelook_perspective", FreelookPerspective.THIRD_PERSON, FreelookPerspective.CODEC);
-    private final ConfigEntry<Integer> smartThreshold = register("smart_threshold", 150, Codec.INT);
+    Behavior behavior = new Behavior();
+    Controls controls = new Controls();
+
+    class Behavior {
+        private final ConfigEntry<Boolean> switchPerspective = register("switch_perspective", true, Codec.BOOL);
+        private final ConfigEntry<FreelookPerspective> freelookPerspective = register("freelook_perspective", FreelookPerspective.THIRD_PERSON, FreelookPerspective.CODEC);
+    }
+
+    class Controls {
+        private final ConfigEntry<FreelookKeyBehavior> freelookKeyBehavior = register("freelook_key_behavior", FreelookKeyBehavior.SMART, FreelookKeyBehavior.CODEC);
+        private final ConfigEntry<Integer> smartThreshold = register("smart_threshold", 150, Codec.INT);
+    }
+
     private final ConfigEntry<Boolean> firstLaunch = register("first_launch", true, Codec.BOOL);
 
     public VBFreelookSettings() {
@@ -32,15 +42,19 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         return INSTANCE;
     }
 
-    public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
-        return freelookKeyBehavior;
+    public ConfigEntry<Boolean> getSwitchPerspective() {
+        return behavior.switchPerspective;
     }
 
     public ConfigEntry<FreelookPerspective> getFreelookPerspective() {
-        return freelookPerspective;
+        return behavior.freelookPerspective;
+    }
+
+    public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
+        return controls.freelookKeyBehavior;
     }
 
     public ConfigEntry<Integer> getSmartThreshold() {
-        return smartThreshold;
+        return controls.smartThreshold;
     }
 }

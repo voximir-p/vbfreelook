@@ -18,8 +18,14 @@ public class FreelookState {
         active = true;
         lastPerspective = client.options.getCameraType();
 
-        var freelookPerspective = VBFreelookSettings.getInstance().getFreelookPerspective().get();
-        client.options.setCameraType(freelookPerspective.asCameraType());
+        if (VBFreelookSettings.getInstance().getSwitchPerspective().get()) {
+            client.options.setCameraType(VBFreelookSettings.getInstance()
+                    .getFreelookPerspective()
+                    .get()
+                    .asCameraType()
+            );
+        }
+
         VBFreelook.LOGGER.debug("Freelook activated");
     }
 
@@ -28,7 +34,10 @@ public class FreelookState {
 
         active = false;
 
-        client.options.setCameraType(lastPerspective);
+        if (VBFreelookSettings.getInstance().getSwitchPerspective().get()) {
+            client.options.setCameraType(lastPerspective);
+        }
+
         VBFreelook.LOGGER.debug("Freelook deactivated");
     }
 
