@@ -5,11 +5,11 @@
   "name": "Voximir's Better Freelook",
   "description": "Lets you look around without changing your movement direction.",
   "authors": [
-    "voximir"
+    "Voximir"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://modrinth.com/mod/vbfreelook",
+    "sources": "https://github.com/voximir-p/vbfreelook"
   },
   "license": "MIT",
   "icon": "assets/vbfreelook/icon.png",
