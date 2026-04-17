@@ -7,6 +7,7 @@ import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.config.v3.ConfigEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.voximir.vbfreelook.VBFreelook;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -16,14 +17,8 @@ public class SettingsGuiFactory {
         return new SettingsGuiFactory().createGui(parent);
     }
 
-    public Screen createGui(Screen parent) {
-        return YetAnotherConfigLib.createBuilder()
-                .title(getCKey("title"))
-                .save(VBFreelookSettings.getInstance()::saveToFile)
-                .category(createBehaviorCategory())
-                .category(createControlsCategory())
-                .build()
-                .generateScreen(parent);
+    private static String getKey(String key) {
+        return "config." + VBFreelook.MOD_ID + "." + key;
     }
 
     private ConfigCategory createBehaviorCategory() {
@@ -81,6 +76,16 @@ public class SettingsGuiFactory {
                 .build();
     }
 
+    public Screen createGui(Screen parent) {
+        return YetAnotherConfigLib.createBuilder()
+                .title(Component.translatable(getKey("title")))
+                .save(VBFreelookSettings.getInstance()::saveToFile)
+                .category(createBehaviorCategory())
+                .category(createControlsCategory())
+                .build()
+                .generateScreen(parent);
+    }
+
     private <T> Option<T> registerOption(
             String translationKey,
             ConfigEntry<T> entry,
@@ -89,7 +94,7 @@ public class SettingsGuiFactory {
             BiFunction<T, String,  OptionDescription.Builder> descriptionBuilderFactory
     ) {
         if (descriptionBuilderFactory == null) {
-            descriptionBuilderFactory = (value, key) -> OptionDescription.createBuilder()
+            descriptionBuilderFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
                     .text(Component.translatable(key + ".description"));
         }
 
@@ -105,21 +110,5 @@ public class SettingsGuiFactory {
         }
 
         return builder.build();
-    }
-
-    private static String getKey(String key) {
-        return "config.vbfreelook." + key;
-    }
-
-    private static String getKey(String category, String key) {
-        return "config.vbfreelook." + category + "." + key;
-    }
-
-    private static Component getCKey(String key) {
-        return Component.translatable(getKey(key));
-    }
-
-    private static Component getCKey(String category, String key) {
-        return Component.translatable(getKey(category, key));
     }
 }

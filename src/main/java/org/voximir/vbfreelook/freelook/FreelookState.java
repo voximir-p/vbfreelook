@@ -6,24 +6,30 @@ import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
 
 public class FreelookState {
+    private static final long NANOS_PER_MILLISECOND = 1_000_000L;
+
     private static boolean active = false;
     private static long lastPressed;
-    private static CameraType lastPerspective;
+    private static CameraType lastPerspective = CameraType.FIRST_PERSON;
 
     public static void activate(Minecraft client) {
+        if (active) return;
+
         active = true;
         lastPerspective = client.options.getCameraType();
 
         var freelookPerspective = VBFreelookSettings.getInstance().getFreelookPerspective().get();
         client.options.setCameraType(freelookPerspective.asCameraType());
-        VBFreelook.LOGGER.info("Freelook activated");
+        VBFreelook.LOGGER.debug("Freelook activated");
     }
 
     public static void deactivate(Minecraft client) {
+        if (!active) return;
+
         active = false;
 
         client.options.setCameraType(lastPerspective);
-        VBFreelook.LOGGER.info("Freelook deactivated");
+        VBFreelook.LOGGER.debug("Freelook deactivated");
     }
 
     public static void toggle(Minecraft client) {
@@ -51,7 +57,7 @@ public class FreelookState {
         switch (freelookKeyBehavior) {
             case HOLD -> deactivate(client);
             case SMART -> {
-                if (System.nanoTime() - lastPressed > smartThreshold * 1_000_000L)
+                if (System.nanoTime() - lastPressed > smartThreshold * NANOS_PER_MILLISECOND)
                     deactivate(client);
             }
         }

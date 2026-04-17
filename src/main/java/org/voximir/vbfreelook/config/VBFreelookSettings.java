@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import dev.isxander.yacl3.config.v3.ConfigEntry;
 import dev.isxander.yacl3.config.v3.JsonFileCodecConfig;
 import net.fabricmc.loader.api.FabricLoader;
+import org.voximir.vbfreelook.VBFreelook;
 
 public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> {
     private static final VBFreelookSettings INSTANCE = new VBFreelookSettings();
@@ -24,7 +25,7 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
     private final ConfigEntry<Boolean> firstLaunch = register("first_launch", true, Codec.BOOL);
 
     public VBFreelookSettings() {
-        super(FabricLoader.getInstance().getConfigDir().resolve("vbfreelook.json"));
+        super(FabricLoader.getInstance().getConfigDir().resolve(VBFreelook.MOD_ID + ".json"));
     }
 
     public static VBFreelookSettings getInstance() {

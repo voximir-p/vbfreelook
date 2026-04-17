@@ -8,10 +8,6 @@ public class KeyCategories {
     public static KeyMapping.Category VBFREELOOK;
 
     public static void registerCategories() {
-        VBFREELOOK = registerCategory("vbfreelook");
-    }
-
-    private static KeyMapping.Category registerCategory(final String name) {
-        return KeyMapping.Category.register(Identifier.fromNamespaceAndPath(VBFreelook.MOD_ID, name));
+        VBFREELOOK = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(VBFreelook.MOD_ID, VBFreelook.MOD_ID));
     }
 }

@@ -8,7 +8,7 @@ import org.voximir.vbfreelook.input.KeyCategories;
 
 public class VBFreelook implements ClientModInitializer {
     public static final String MOD_ID = "vbfreelook";
-    public static final Logger LOGGER = LoggerFactory.getLogger("Voximir's Better Freelook");
+    public static final Logger LOGGER = LoggerFactory.getLogger(VBFreelook.class);
 
     @Override
     public void onInitializeClient() {
