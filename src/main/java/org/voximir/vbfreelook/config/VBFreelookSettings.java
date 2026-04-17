@@ -29,8 +29,12 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
     Controls controls = new Controls();
 
     class Behavior {
-        private final ConfigEntry<Boolean> switchPerspective = register("switch_perspective", true, Codec.BOOL);
-        private final ConfigEntry<FreelookPerspective> freelookPerspective = register("freelook_perspective", FreelookPerspective.THIRD_PERSON, FreelookPerspective.CODEC);
+        Basic basic = new Basic();
+
+        class Basic {
+            private final ConfigEntry<Boolean> switchPerspective = register("switch_perspective", true, Codec.BOOL);
+            private final ConfigEntry<FreelookPerspective> freelookPerspective = register("freelook_perspective", FreelookPerspective.THIRD_PERSON, FreelookPerspective.CODEC);
+        }
     }
 
     class Controls {
@@ -47,11 +51,11 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
     }
 
     public ConfigEntry<Boolean> getSwitchPerspective() {
-        return behavior.switchPerspective;
+        return behavior.basic.switchPerspective;
     }
 
     public ConfigEntry<FreelookPerspective> getFreelookPerspective() {
-        return behavior.freelookPerspective;
+        return behavior.basic.freelookPerspective;
     }
 
     public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
