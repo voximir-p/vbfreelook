@@ -11,13 +11,17 @@ import org.voximir.vbfreelook.config.enums.FreelookPerspective;
 public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> {
     private static final VBFreelookSettings INSTANCE = new VBFreelookSettings();
 
-    static {
-        if (!INSTANCE.loadFromFile())
-            INSTANCE.saveToFile();
+    private static final int SCHEMA_VERSION = 1;
+    private final ConfigEntry<Integer> schemaVersion = register("schema_version", SCHEMA_VERSION, Codec.INT);
 
-        if (INSTANCE.firstLaunch.get()) {
-            INSTANCE.firstLaunch.set(false);
+    static {
+        if (!INSTANCE.loadFromFile()) {
             INSTANCE.saveToFile();
+        } else {
+            // noinspection StatementWithEmptyBody
+            if (INSTANCE.schemaVersion.get() < 1) {
+                // Handle migration; not used yet
+            }
         }
     }
 
@@ -33,8 +37,6 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         private final ConfigEntry<FreelookKeyBehavior> freelookKeyBehavior = register("freelook_key_behavior", FreelookKeyBehavior.SMART, FreelookKeyBehavior.CODEC);
         private final ConfigEntry<Integer> smartThreshold = register("smart_threshold", 150, Codec.INT);
     }
-
-    private final ConfigEntry<Boolean> firstLaunch = register("first_launch", true, Codec.BOOL);
 
     public VBFreelookSettings() {
         super(FabricLoader.getInstance().getConfigDir().resolve(VBFreelook.MOD_ID + ".json"));
