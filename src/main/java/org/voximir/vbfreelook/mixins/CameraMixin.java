@@ -1,4 +1,4 @@
-package org.voximir.vbfreelook.mixin;
+package org.voximir.vbfreelook.mixins;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;

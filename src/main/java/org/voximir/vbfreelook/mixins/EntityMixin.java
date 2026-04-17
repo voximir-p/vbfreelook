@@ -1,4 +1,4 @@
-package org.voximir.vbfreelook.mixin;
+package org.voximir.vbfreelook.mixins;
 
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;

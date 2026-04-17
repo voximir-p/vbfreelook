@@ -5,6 +5,8 @@ import dev.isxander.yacl3.config.v3.ConfigEntry;
 import dev.isxander.yacl3.config.v3.JsonFileCodecConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import org.voximir.vbfreelook.VBFreelook;
+import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
+import org.voximir.vbfreelook.config.enums.FreelookPerspective;
 
 public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> {
     private static final VBFreelookSettings INSTANCE = new VBFreelookSettings();

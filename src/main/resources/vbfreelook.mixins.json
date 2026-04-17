@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "org.voximir.vbfreelook.mixin",
+  "package": "org.voximir.vbfreelook.mixins",
   "compatibilityLevel": "JAVA_${java_version}",
   "mixins": [
     "CameraMixin",

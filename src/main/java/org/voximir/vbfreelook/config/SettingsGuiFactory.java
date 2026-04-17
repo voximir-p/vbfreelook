@@ -9,6 +9,8 @@ import dev.isxander.yacl3.config.v3.ConfigEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.voximir.vbfreelook.VBFreelook;
+import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
+import org.voximir.vbfreelook.config.enums.FreelookPerspective;
 
 import java.util.List;
 import java.util.function.BiFunction;

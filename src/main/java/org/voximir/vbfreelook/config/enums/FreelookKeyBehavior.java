@@ -1,4 +1,4 @@
-package org.voximir.vbfreelook.config;
+package org.voximir.vbfreelook.config.enums;
 
 import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
