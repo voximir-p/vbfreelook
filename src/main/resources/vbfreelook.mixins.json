@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "org.voximir.vbfreelook.mixin",
+  "compatibilityLevel": "JAVA_${java_version}",
+  "mixins": [
+    "CameraMixin",
+    "EntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

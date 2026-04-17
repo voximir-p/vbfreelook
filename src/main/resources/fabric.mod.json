@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "vbfreelook",
+  "version": "${version}",
+  "name": "Voximir's Better Freelook",
+  "description": "Lets you look around without changing your movement direction.",
+  "authors": [
+    "voximir"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MIT",
+  "icon": "assets/vbfreelook/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "org.voximir.vbfreelook.VBFreelook"
+    ],
+    "modmenu": [
+      "org.voximir.vbfreelook.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "vbfreelook.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "${loader_version_range}",
+    "fabric-api": "*",
+    "minecraft": "${game_version_range}",
+    "java": "${java_version_range}",
+    "yet_another_config_lib_v3": "${yacl_version_range}"
+  }
+}
