@@ -20,29 +20,18 @@ public class SettingsGuiFactory {
         return YetAnotherConfigLib.createBuilder()
                 .title(getCKey("title"))
                 .save(VBFreelookSettings.getInstance()::saveToFile)
-                .category(createVBFreelookCategory())
+                .category(createBehaviorCategory())
+                .category(createControlsCategory())
                 .build()
                 .generateScreen(parent);
     }
 
-    private ConfigCategory createVBFreelookCategory() {
-        String category = getKey("category.vbfreelook");
+    private ConfigCategory createBehaviorCategory() {
+        String category = getKey("category.behavior");
 
-        Option<FreelookKeyBehaviour> freelookKeyBehaviourOption = registerOption(
-                category + ".behaviour.option.freelook_key_behaviour",
-                VBFreelookSettings.getInstance().getFreelookKeyBehaviour(),
-                option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehaviour.class),
-                new OptionFlag[0],
-                (value, key) -> OptionDescription.createBuilder().text(
-                        Component.translatable(key + ".description")
-                                .append(Component.translatable(key + ".description." + value.name().toLowerCase()))
-                ));
-
-        OptionGroup behaviour = OptionGroup.createBuilder()
-                .name(Component.translatable(category + ".behaviour"))
-                .option(freelookKeyBehaviourOption)
+        OptionGroup basic = OptionGroup.createBuilder().name(Component.translatable(category + ".basic"))
                 .option(registerOption(
-                        category + ".behaviour.option.freelook_perspective",
+                        category + ".basic.option.freelook_perspective",
                         VBFreelookSettings.getInstance().getFreelookPerspective(),
                         option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
                         new OptionFlag[0],
@@ -50,8 +39,26 @@ public class SettingsGuiFactory {
                 ))
                 .build();
 
+        return ConfigCategory.createBuilder()
+                .name(Component.translatable(category))
+                .group(basic)
+                .build();
+    }
+
+    private ConfigCategory createControlsCategory() {
+        String category = getKey("category.controls");
+
+        Option<FreelookKeyBehavior> freelookKeyBehaviorOption = registerOption(
+                category + ".option.freelook_key_behavior",
+                VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
+                option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
+                new OptionFlag[0], (value, key) -> OptionDescription.createBuilder()
+                        .text(Component.translatable(key + ".description")
+                                .append(Component.translatable(key + ".description." + value.name().toLowerCase())))
+        );
+
         Option<Integer> smartThresholdOption = registerOption(
-                category + ".smart_mode.option.smart_threshold",
+                category + ".option.smart_threshold",
                 VBFreelookSettings.getInstance().getSmartThreshold(),
                 option -> IntegerSliderControllerBuilder.create(option)
                         .range(1, 500)
@@ -61,22 +68,16 @@ public class SettingsGuiFactory {
                 null
         );
 
-        smartThresholdOption.setAvailable(freelookKeyBehaviourOption.pendingValue() == FreelookKeyBehaviour.SMART);
-        freelookKeyBehaviourOption.addEventListener((option, event) -> {
+        smartThresholdOption.setAvailable(freelookKeyBehaviorOption.pendingValue() == FreelookKeyBehavior.SMART);
+        freelookKeyBehaviorOption.addEventListener((option, event) -> {
             if (event == OptionEventListener.Event.INITIAL || event == OptionEventListener.Event.STATE_CHANGE)
-                smartThresholdOption.setAvailable(option.pendingValue() == FreelookKeyBehaviour.SMART);
+                smartThresholdOption.setAvailable(option.pendingValue() == FreelookKeyBehavior.SMART);
         });
-
-        OptionGroup smartMode = OptionGroup.createBuilder()
-                .name(Component.translatable(category + ".smart_mode"))
-                .collapsed(true)
-                .option(smartThresholdOption)
-                .build();
 
         return ConfigCategory.createBuilder()
                 .name(Component.translatable(category))
-                .group(behaviour)
-                .group(smartMode)
+                .option(freelookKeyBehaviorOption)
+                .option(smartThresholdOption)
                 .build();
     }
 

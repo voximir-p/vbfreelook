@@ -1,15 +1,22 @@
 config.vbfreelook:
   title: Voximir's Better Freelook
-  category.vbfreelook:
-    .: Voximir's Better Freelook
-    behaviour:
-      .: Behaviour
+  category:
+    behavior:
+      .: Behavior
+      basic:
+        .: Basic
+        option:
+          freelook_perspective:
+            .: Freelook Perspective
+            description: The perspective you switch to when freelook is activated.
+    controls:
+      .: Controls
       option:
-        freelook_key_behaviour:
-          .: Freelook Key Behaviour
+        freelook_key_behavior:
+          .: Freelook Key Behavior
           description:
             .: |+
-              The behaviour of the freelook key.
+              The behavior of the freelook key.
 
 
             smart: |
@@ -19,18 +26,13 @@ config.vbfreelook:
               §lHold§r: You have to hold the key to freelook.
             toggle: >
               §lToggle§r: Pressing the key toggles freelook on/off.
-        freelook_perspective:
-          .: Freelook Perspective
-          description: The perspective you switch to when freelook is activated.
-    smart_mode:
-      .: Smart Mode
-      option.smart_threshold:
-        .: Smart Threshold
-        description: >
-          How many milliseconds you have to hold the freelook key
-          for it to be considered a hold rather than a tap.
+        smart_threshold:
+          .: Smart Threshold
+          description: >
+            How many milliseconds you have to hold the freelook key
+            for it to be considered a hold rather than a tap.
   enum:
-    freelook_key_behaviour:
+    freelook_key_behavior:
       hold: Hold
       smart: Smart
       toggle: Toggle

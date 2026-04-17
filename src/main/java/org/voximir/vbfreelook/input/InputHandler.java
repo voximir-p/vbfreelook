@@ -16,8 +16,8 @@ public class InputHandler {
     private static boolean wasFreelookKeyDown = false;
 
     public static void registerKeys() {
-        FREELOOK_KEY = registerKey("freelook", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, KeyCategories.VBFREELOOK);
-        SETTINGS_KEY = registerKey("settings", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_F12, KeyCategories.VBFREELOOK);
+        FREELOOK_KEY = registerKey("freelook", GLFW.GLFW_KEY_LEFT_ALT, KeyCategories.VBFREELOOK);
+        SETTINGS_KEY = registerKey("settings", GLFW.GLFW_KEY_F12, KeyCategories.VBFREELOOK);
     }
 
     public static void registerEvents() {
@@ -47,7 +47,7 @@ public class InputHandler {
         }
     }
 
-    private static KeyMapping registerKey(String id, InputConstants.Type type, int code, KeyMapping.Category category) {
-        return KeyMappingHelper.registerKeyMapping(new KeyMapping("key.vbfreelook." + id, type, code, category));
+    private static KeyMapping registerKey(String id, int code, KeyMapping.Category category) {
+        return KeyMappingHelper.registerKeyMapping(new KeyMapping("key.vbfreelook." + id, InputConstants.Type.KEYSYM, code, category));
     }
 }

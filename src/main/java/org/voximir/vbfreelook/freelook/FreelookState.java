@@ -32,8 +32,8 @@ public class FreelookState {
     }
 
     public static void handleKeyPressed(Minecraft client) {
-        var freelookKeyBehaviour = VBFreelookSettings.getInstance().getFreelookKeyBehaviour().get();
-        switch (freelookKeyBehaviour) {
+        var freelookKeyBehavior = VBFreelookSettings.getInstance().getFreelookKeyBehavior().get();
+        switch (freelookKeyBehavior) {
             case HOLD -> activate(client);
             case TOGGLE -> toggle(client);
             case SMART -> {
@@ -46,9 +46,9 @@ public class FreelookState {
     }
 
     public static void handleKeyReleased(Minecraft client) {
-        var freelookKeyBehaviour = VBFreelookSettings.getInstance().getFreelookKeyBehaviour().get();
+        var freelookKeyBehavior = VBFreelookSettings.getInstance().getFreelookKeyBehavior().get();
         var smartThreshold = VBFreelookSettings.getInstance().getSmartThreshold().get();
-        switch (freelookKeyBehaviour) {
+        switch (freelookKeyBehavior) {
             case HOLD -> deactivate(client);
             case SMART -> {
                 if (System.nanoTime() - lastPressed > smartThreshold * 1_000_000L)
