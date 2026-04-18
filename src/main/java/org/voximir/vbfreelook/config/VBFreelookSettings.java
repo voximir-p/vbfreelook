@@ -32,6 +32,7 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
 
     class Behavior {
         Perspective perspective = new Perspective();
+        Transitions transitions = new Transitions();
 
         class Perspective {
             private final ConfigEntry<Boolean> shouldSwitchPerspective = register(
@@ -53,6 +54,14 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
                     "switch_back_perspective",
                     SwitchBackPerspective.ORIGINAL,
                     SwitchBackPerspective.CODEC
+            );
+        }
+
+        class Transitions {
+            private final ConfigEntry<Integer> zoomOutTime = register(
+                    "zoom_out_time",
+                    500,
+                    Codec.INT
             );
         }
     }
@@ -92,6 +101,10 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
 
     public ConfigEntry<SwitchBackPerspective> getSwitchBackPerspective() {
         return behavior.perspective.switchBackPerspective;
+    }
+
+    public ConfigEntry<Integer> getZoomOutTime() {
+        return behavior.transitions.zoomOutTime;
     }
 
     public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {

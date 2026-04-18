@@ -10,6 +10,7 @@ public class FreelookState {
     private static final long NANOS_PER_MILLISECOND = 1_000_000L;
 
     private static boolean active = false;
+    private static long zoomOutStart;
     private static long lastPressed;
     private static CameraType lastPerspective = CameraType.FIRST_PERSON;
 
@@ -18,6 +19,9 @@ public class FreelookState {
 
         active = true;
         lastPerspective = client.options.getCameraType();
+        if (lastPerspective == CameraType.FIRST_PERSON) {
+            zoomOutStart = System.nanoTime();
+        }
 
         if (VBFreelookSettings.getInstance().getShouldSwitchPerspective().get()) {
             client.options.setCameraType(VBFreelookSettings.getInstance()
@@ -34,7 +38,6 @@ public class FreelookState {
         if (!active) return;
 
         active = false;
-
         if (VBFreelookSettings.getInstance().getShouldSwitchPerspective().get()) {
             switch (VBFreelookSettings.getInstance().getShouldSwitchBackPerspective().get()) {
                 case ALWAYS -> SwitchBackPerspective.switchBackPerspective(client, lastPerspective);
@@ -89,5 +92,12 @@ public class FreelookState {
 
     public static boolean isActive() {
         return active;
+    }
+
+    public static float getZoomingOutProgress() {
+        if (!active) return 0.0f;
+        var elapsed = System.nanoTime() - zoomOutStart;
+        var zoomOutTimeNanos = VBFreelookSettings.getInstance().getZoomOutTime().get() * NANOS_PER_MILLISECOND;
+        return Math.min(1.0f, (float) elapsed / zoomOutTimeNanos);
     }
 }

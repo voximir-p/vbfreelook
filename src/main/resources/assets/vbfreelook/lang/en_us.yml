@@ -5,39 +5,48 @@ config.vbfreelook:
       .: Behavior
       perspective:
         .: Perspective
-        option:
-          should_switch_perspective:
-            .: Should Switch Perspective
-            description: Whether to switch perspective when freelook is activated.
-          freelook_perspective:
-            .: Freelook Perspective
-            description: The perspective you switch to when freelook is activated.
-          should_switch_back_perspective:
-            .: Should Switch Back Perspective
-            description:
-              .: |+
-                Whether to switch back to the desired perspective when freelook is deactivated.
+        should_switch_perspective:
+          .: Should Switch Perspective
+          description: Whether to switch perspective when freelook is activated.
+        freelook_perspective:
+          .: Freelook Perspective
+          description: The perspective you switch to when freelook is activated.
+        should_switch_back_perspective:
+          .: Should Switch Back Perspective
+          description:
+            .: |+
+              Whether to switch back to the desired perspective when freelook is deactivated.
 
 
-              always: >
-                §lAlways§r: Switch back to the desired perspective when freelook is deactivated.
-              if_unchanged: >
-                §lIf Unchanged§r: Only switch back to the desired perspective
-                if the perspective hasn't been changed while freelook was active.
-              never: >
-                §lNever§r: Keep the current perspective when freelook is deactivated.
-          switch_back_perspective:
-            .: Switch Back Perspective
-            description:
-              .: >
-                Perspective to switch to when freelook is deactivated.
-              original: |+
+            always: >
+              §lAlways§r: Switch back to the desired perspective when freelook is deactivated.
+            if_unchanged: >
+              §lIf Unchanged§r: Only switch back to the desired perspective
+              if the perspective hasn't been changed while freelook was active.
+            never: >
+              §lNever§r: Keep the current perspective when freelook is deactivated.
+        switch_back_perspective:
+          .: Switch Back Perspective
+          description:
+            .: >
+              Perspective to switch to when freelook is deactivated.
+            original: |+
 
 
-                §lOriginal Perspective§r: The last perspective before freelook was activated.
+              §lOriginal Perspective§r: The last perspective before freelook was activated.
+      transition:
+        .: Transition
+        zoom_out_time:
+            .: Zoom Out Time
+            description: >
+              How many milliseconds it takes to zoom out from first person
+              to second/third person when freelook is activated.
+
+              §lSet it to zero to disable the transition.§r
     controls:
       .: Controls
-      option:
+      basic:
+        .: Basic
         freelook_key_behavior:
           .: Freelook Key Behavior
           description:

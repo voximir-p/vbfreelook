@@ -26,19 +26,19 @@ public class InputHandler {
     }
 
     private static void handleFreelookKey(Minecraft client) {
-        if (client.player == null) return;
-
         boolean isFreelookKeyDown = FREELOOK_KEY.isDown();
 
-        // Only react to key state changes
-        if (isFreelookKeyDown == wasFreelookKeyDown) return;
+        if (client.player == null || isFreelookKeyDown == wasFreelookKeyDown) {
+            return;
+        }
 
         wasFreelookKeyDown = isFreelookKeyDown;
 
-        if (isFreelookKeyDown)
+        if (isFreelookKeyDown) {
             FreelookState.handleKeyPressed(client);
-        else
+        } else {
             FreelookState.handleKeyReleased(client);
+        }
     }
 
     private static void handleSettingsKey(Minecraft client) {
