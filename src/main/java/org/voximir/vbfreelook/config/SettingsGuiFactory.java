@@ -24,7 +24,7 @@ public class SettingsGuiFactory {
 
     private Screen createGui(Screen parent) {
         return YetAnotherConfigLib.createBuilder()
-                .title(Component.translatable(KeyUtils.getKey("title")))
+                .title(Component.translatable(KeyUtils.getConfig("title")))
                 .save(VBFreelookSettings.getInstance()::saveToFile)
                 .category(Categories.createBehaviorCategory())
                 .category(Categories.createControlsCategory())
@@ -37,18 +37,18 @@ public class SettingsGuiFactory {
             ConfigEntry<T> entry,
             Function<Option<T>, ControllerBuilder<T>> controllerFactory,
             OptionFlag[] flags,
-            BiFunction<T, String, OptionDescription> descriptionFactory
+            BiFunction<T, String, OptionDescription.Builder> descriptionBuildFactory
     ) {
-        if (descriptionFactory == null) {
-            descriptionFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
-                    .text(Component.translatable(key + ".description"))
-                    .build();
+        var descriptionKey = KeyUtils.join(translationKey, "description");
+        if (descriptionBuildFactory == null) {
+            descriptionBuildFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
+                    .text(Component.translatable(key));
         }
 
-        var finalDescriptionFactory = descriptionFactory;
+        var finalDescriptionFactory = descriptionBuildFactory;
         Option.Builder<T> builder = Option.<T>createBuilder()
                 .name(Component.translatable(translationKey))
-                .description(value -> finalDescriptionFactory.apply(value, translationKey))
+                .description(value -> finalDescriptionFactory.apply(value, descriptionKey).build())
                 .binding(entry.defaultValue(), entry::get, entry::set)
                 .controller(controllerFactory);
 
@@ -86,10 +86,10 @@ public class SettingsGuiFactory {
                 private static Option<FreelookPerspective> freelookPerspectiveOption;
 
                 private OptionGroup createPerspectiveGroup() {
-                    String group = KeyUtils.getGroup(category, "perspective");
+                    String group = KeyUtils.join(category, "perspective");
 
                     shouldSwitchPerspectiveOption = registerOption(
-                            KeyUtils.getOption(group, "should_switch_perspective"),
+                            KeyUtils.join(group, "should_switch_perspective"),
                             VBFreelookSettings.getInstance().getShouldSwitchPerspective(),
                             TickBoxControllerBuilder::create,
                             new OptionFlag[0],
@@ -97,7 +97,7 @@ public class SettingsGuiFactory {
                     );
 
                     freelookPerspectiveOption = registerOption(
-                            KeyUtils.getOption(group, "freelook_perspective"),
+                            KeyUtils.join(group, "freelook_perspective"),
                             VBFreelookSettings.getInstance().getFreelookPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
                             new OptionFlag[0],
@@ -105,27 +105,26 @@ public class SettingsGuiFactory {
                     );
 
                     var shouldSwitchBackPerspectiveOption = registerOption(
-                            KeyUtils.getOption(group, "should_switch_back_perspective"),
+                            KeyUtils.join(group, "should_switch_back_perspective"),
                             VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(ShouldSwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, key) -> OptionDescription.createBuilder()
-                                    .text(Component.translatable(key + ".description")
-                                            .append(Component.translatable(key + ".description." + value.name().toLowerCase()))
-                                    ).build()
+                                    .text(Component.translatable(key)
+                                            .append(Component.translatable(KeyUtils.join(key, value.name().toLowerCase()))))
                     );
 
                     var switchBackPerspectiveOption = registerOption(
-                            KeyUtils.getOption(group, "switch_back_perspective"),
+                            KeyUtils.join(group, "switch_back_perspective"),
                             VBFreelookSettings.getInstance().getSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(SwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, key) -> {
-                                var txt = Component.translatable(key + ".description");
+                                var txt = Component.translatable(key);
                                 if (value == SwitchBackPerspective.ORIGINAL) {
-                                    txt.append(Component.translatable(key + ".description." + value.name().toLowerCase()));
+                                    txt.append(Component.translatable(KeyUtils.join(key, value.name().toLowerCase())));
                                 }
-                                return OptionDescription.createBuilder().text(txt).build();
+                                return OptionDescription.createBuilder().text(txt);
                             }
                     );
 
@@ -153,10 +152,10 @@ public class SettingsGuiFactory {
                 }
 
                 private OptionGroup createTransitionGroup() {
-                    String group = KeyUtils.getGroup(category, "transition");
+                    String group = KeyUtils.join(category, "transition");
 
                     var zoomOutTimeOption = registerOption(
-                            KeyUtils.getOption(group, "zoom_out_time"),
+                            KeyUtils.join(group, "zoom_out_time"),
                             VBFreelookSettings.getInstance().getZoomOutTime(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 2000)
@@ -199,21 +198,20 @@ public class SettingsGuiFactory {
 
             class Groups {
                 private OptionGroup createBasicGroup() {
-                    String group = KeyUtils.getGroup(category, "basic");
+                    String group = KeyUtils.join(category, "basic");
 
                     var freelookKeyBehaviorOption = registerOption(
-                            KeyUtils.getOption(group, "freelook_key_behavior"),
+                            KeyUtils.join(group, "freelook_key_behavior"),
                             VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
                             new OptionFlag[0],
                             (value, key) -> OptionDescription.createBuilder()
-                                    .text(Component.translatable(key + ".description")
-                                            .append(Component.translatable(key + ".description." + value.name().toLowerCase()))
-                                    ).build()
+                                    .text(Component.translatable(key)
+                                            .append(Component.translatable(KeyUtils.join(key, value.name().toLowerCase()))))
                     );
 
                     var smartThresholdOption = registerOption(
-                            KeyUtils.getOption(group, "smart_threshold"),
+                            KeyUtils.join(group, "smart_threshold"),
                             VBFreelookSettings.getInstance().getSmartThreshold(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 500)
