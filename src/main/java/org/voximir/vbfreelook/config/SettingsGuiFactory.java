@@ -123,7 +123,7 @@ public class SettingsGuiFactory {
                 category + ".option.smart_threshold",
                 VBFreelookSettings.getInstance().getSmartThreshold(),
                 option -> IntegerSliderControllerBuilder.create(option)
-                        .range(1, 500)
+                        .range(0, 500)
                         .step(10)
                         .formatValue(ms -> Component.literal(String.format("%d ms", ms))),
                 new OptionFlag[0],
