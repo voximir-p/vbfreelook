@@ -70,6 +70,6 @@ public abstract class CameraMixin {
             return original;
         }
 
-        return Mth.lerp(progress, 0.0f, original);
+        return Mth.lerp(progress, -0.3f, original);
     }
 }
