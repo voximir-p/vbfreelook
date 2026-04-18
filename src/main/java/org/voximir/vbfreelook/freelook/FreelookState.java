@@ -78,8 +78,11 @@ public class FreelookState {
         switch (freelookKeyBehavior) {
             case HOLD -> deactivate(client);
             case SMART -> {
-                if (System.nanoTime() - lastPressed > smartThreshold * NANOS_PER_MILLISECOND)
+                if (System.nanoTime() - lastPressed > smartThreshold * NANOS_PER_MILLISECOND) {
                     deactivate(client);
+                } else {
+                    lastPressed = 0;
+                }
             }
         }
     }
