@@ -36,7 +36,7 @@ public class SettingsGuiFactory {
     private ConfigCategory createBehaviorCategory() {
         String category = getKey("category.behavior");
 
-        Option<Boolean> shouldSwitchPerspectiveOption = registerOption(
+        var shouldSwitchPerspectiveOption = registerOption(
                 category + ".perspective.option.should_switch_perspective",
                 VBFreelookSettings.getInstance().getShouldSwitchPerspective(),
                 TickBoxControllerBuilder::create,
@@ -44,7 +44,7 @@ public class SettingsGuiFactory {
                 null
         );
 
-        Option<FreelookPerspective> freelookPerspectiveOption = registerOption(
+        var freelookPerspectiveOption = registerOption(
                 category + ".perspective.option.freelook_perspective",
                 VBFreelookSettings.getInstance().getFreelookPerspective(),
                 option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
@@ -52,7 +52,7 @@ public class SettingsGuiFactory {
                 null
         );
 
-        Option<ShouldSwitchBackPerspective> shouldSwitchBackPerspectiveOption = registerOption(
+        var shouldSwitchBackPerspectiveOption = registerOption(
                 category + ".perspective.option.should_switch_back_perspective",
                 VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
                 option -> EnumControllerBuilder.create(option).enumClass(ShouldSwitchBackPerspective.class),
@@ -63,7 +63,7 @@ public class SettingsGuiFactory {
                         ).build()
         );
 
-        Option<SwitchBackPerspective> switchBackPerspectiveOption = registerOption(
+        var switchBackPerspectiveOption = registerOption(
                 category + ".perspective.option.switch_back_perspective",
                 VBFreelookSettings.getInstance().getSwitchBackPerspective(),
                 option -> EnumControllerBuilder.create(option).enumClass(SwitchBackPerspective.class),
@@ -91,7 +91,7 @@ public class SettingsGuiFactory {
                 Boolean::booleanValue
         );
 
-        OptionGroup perspective = OptionGroup.createBuilder()
+        var perspectiveGroup = OptionGroup.createBuilder()
                 .name(Component.translatable(category + ".perspective"))
                 .option(shouldSwitchPerspectiveOption)
                 .option(freelookPerspectiveOption)
@@ -101,14 +101,14 @@ public class SettingsGuiFactory {
 
         return ConfigCategory.createBuilder()
                 .name(Component.translatable(category))
-                .group(perspective)
+                .group(perspectiveGroup)
                 .build();
     }
 
     private ConfigCategory createControlsCategory() {
         String category = getKey("category.controls");
 
-        Option<FreelookKeyBehavior> freelookKeyBehaviorOption = registerOption(
+        var freelookKeyBehaviorOption = registerOption(
                 category + ".option.freelook_key_behavior",
                 VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
                 option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
@@ -119,7 +119,7 @@ public class SettingsGuiFactory {
                         ).build()
         );
 
-        Option<Integer> smartThresholdOption = registerOption(
+        var smartThresholdOption = registerOption(
                 category + ".option.smart_threshold",
                 VBFreelookSettings.getInstance().getSmartThreshold(),
                 option -> IntegerSliderControllerBuilder.create(option)
