@@ -1,7 +1,7 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
-	id 'maven-publish'
 	id 'me.fallenbreath.yamlang' version '1.5.0'
+    // id 'maven-publish'
 }
 
 version = project.mod_version
@@ -84,6 +84,12 @@ jar {
 	}
 }
 
+yamlang {
+	targetSourceSets = [sourceSets.main]
+	inputDir = "assets/${project.mod_id}/lang"
+}
+
+/*
 // configure the maven publication
 publishing {
 	publications {
@@ -100,8 +106,4 @@ publishing {
 		// retrieving dependencies.
 	}
 }
-
-yamlang {
-	targetSourceSets = [sourceSets.main]
-	inputDir = "assets/${project.mod_id}/lang"
-}
+*/
