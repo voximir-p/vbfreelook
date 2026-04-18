@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
 import org.voximir.vbfreelook.config.enums.FreelookPerspective;
+import org.voximir.vbfreelook.config.enums.ShouldSwitchBackPerspective;
+import org.voximir.vbfreelook.config.enums.SwitchBackPerspective;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -21,52 +23,85 @@ public class SettingsGuiFactory {
         return new SettingsGuiFactory().createGui(parent);
     }
 
-    private static String getKey(String key) {
-        return "config." + VBFreelook.MOD_ID + "." + key;
-    }
-
-    private static <T> void bindDependentsAvailability(Option<T> sourceOption, List<Option<?>> dependentOptions, Function<T, Boolean> availabilityPredicate) {
-        for (var dependant : dependentOptions) {
-            dependant.setAvailable(availabilityPredicate.apply(sourceOption.pendingValue()));
-        }
-        sourceOption.addEventListener((option, event) -> {
-            if (event == OptionEventListener.Event.INITIAL || event == OptionEventListener.Event.STATE_CHANGE) {
-                for (var dependant : dependentOptions) {
-                    dependant.setAvailable(availabilityPredicate.apply(option.pendingValue()));
-                }
-            }
-        });
+    public Screen createGui(Screen parent) {
+        return YetAnotherConfigLib.createBuilder()
+                .title(Component.translatable(getKey("title")))
+                .save(VBFreelookSettings.getInstance()::saveToFile)
+                .category(createBehaviorCategory())
+                .category(createControlsCategory())
+                .build()
+                .generateScreen(parent);
     }
 
     private ConfigCategory createBehaviorCategory() {
         String category = getKey("category.behavior");
 
-        Option<Boolean> switchPerspectiveOption = registerOption(
-                category + ".basic.option.switch_perspective",
-                VBFreelookSettings.getInstance().getSwitchPerspective(),
+        Option<Boolean> shouldSwitchPerspectiveOption = registerOption(
+                category + ".perspective.option.should_switch_perspective",
+                VBFreelookSettings.getInstance().getShouldSwitchPerspective(),
                 TickBoxControllerBuilder::create,
                 new OptionFlag[0],
                 null
         );
 
         Option<FreelookPerspective> freelookPerspectiveOption = registerOption(
-                category + ".basic.option.freelook_perspective",
+                category + ".perspective.option.freelook_perspective",
                 VBFreelookSettings.getInstance().getFreelookPerspective(),
                 option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
                 new OptionFlag[0],
                 null
         );
 
-        bindDependentsAvailability(switchPerspectiveOption, List.of(freelookPerspectiveOption), Boolean::booleanValue);
+        Option<ShouldSwitchBackPerspective> shouldSwitchBackPerspectiveOption = registerOption(
+                category + ".perspective.option.should_switch_back_perspective",
+                VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
+                option -> EnumControllerBuilder.create(option).enumClass(ShouldSwitchBackPerspective.class),
+                new OptionFlag[0],
+                (value, key) -> OptionDescription.createBuilder()
+                        .text(Component.translatable(key + ".description")
+                                .append(Component.translatable(key + ".description." + value.name().toLowerCase()))
+                        ).build()
+        );
 
-        OptionGroup basic = OptionGroup.createBuilder().name(Component.translatable(category + ".basic"))
-                .option(switchPerspectiveOption)
+        Option<SwitchBackPerspective> switchBackPerspectiveOption = registerOption(
+                category + ".perspective.option.switch_back_perspective",
+                VBFreelookSettings.getInstance().getSwitchBackPerspective(),
+                option -> EnumControllerBuilder.create(option).enumClass(SwitchBackPerspective.class),
+                new OptionFlag[0],
+                (value, key) -> {
+                    var txt = Component.translatable(key + ".description");
+                    if (value == SwitchBackPerspective.ORIGINAL) {
+                        txt.append(Component.translatable(key + ".description." + value.name().toLowerCase()));
+                    }
+                    return OptionDescription.createBuilder().text(txt).build();
+                }
+        );
+
+        bindDependentsAvailability(
+                shouldSwitchBackPerspectiveOption,
+                List.of(switchBackPerspectiveOption),
+                val -> val != ShouldSwitchBackPerspective.NEVER
+        );
+
+        bindDependentsAvailability(
+                shouldSwitchPerspectiveOption,
+                List.of(freelookPerspectiveOption,
+                        shouldSwitchBackPerspectiveOption,
+                        switchBackPerspectiveOption),
+                Boolean::booleanValue
+        );
+
+        OptionGroup perspective = OptionGroup.createBuilder()
+                .name(Component.translatable(category + ".perspective"))
+                .option(shouldSwitchPerspectiveOption)
                 .option(freelookPerspectiveOption)
+                .option(shouldSwitchBackPerspectiveOption)
+                .option(switchBackPerspectiveOption)
                 .build();
 
         return ConfigCategory.createBuilder()
                 .name(Component.translatable(category))
-                .group(basic)
+                .group(perspective)
                 .build();
     }
 
@@ -77,9 +112,11 @@ public class SettingsGuiFactory {
                 category + ".option.freelook_key_behavior",
                 VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
                 option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
-                new OptionFlag[0], (value, key) -> OptionDescription.createBuilder()
+                new OptionFlag[0],
+                (value, key) -> OptionDescription.createBuilder()
                         .text(Component.translatable(key + ".description")
-                                .append(Component.translatable(key + ".description." + value.name().toLowerCase())))
+                                .append(Component.translatable(key + ".description." + value.name().toLowerCase()))
+                        ).build()
         );
 
         Option<Integer> smartThresholdOption = registerOption(
@@ -93,7 +130,11 @@ public class SettingsGuiFactory {
                 null
         );
 
-        bindDependentsAvailability(freelookKeyBehaviorOption, List.of(smartThresholdOption), val -> val == FreelookKeyBehavior.SMART);
+        bindDependentsAvailability(
+                freelookKeyBehaviorOption,
+                List.of(smartThresholdOption),
+                val -> val == FreelookKeyBehavior.SMART
+        );
 
         return ConfigCategory.createBuilder()
                 .name(Component.translatable(category))
@@ -102,14 +143,8 @@ public class SettingsGuiFactory {
                 .build();
     }
 
-    public Screen createGui(Screen parent) {
-        return YetAnotherConfigLib.createBuilder()
-                .title(Component.translatable(getKey("title")))
-                .save(VBFreelookSettings.getInstance()::saveToFile)
-                .category(createBehaviorCategory())
-                .category(createControlsCategory())
-                .build()
-                .generateScreen(parent);
+    private static String getKey(String key) {
+        return "config." + VBFreelook.MOD_ID + "." + key;
     }
 
     private <T> Option<T> registerOption(
@@ -117,17 +152,18 @@ public class SettingsGuiFactory {
             ConfigEntry<T> entry,
             Function<Option<T>, ControllerBuilder<T>> controllerFactory,
             OptionFlag[] flags,
-            BiFunction<T, String,  OptionDescription.Builder> descriptionBuilderFactory
+            BiFunction<T, String, OptionDescription> descriptionFactory
     ) {
-        if (descriptionBuilderFactory == null) {
-            descriptionBuilderFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
-                    .text(Component.translatable(key + ".description"));
+        if (descriptionFactory == null) {
+            descriptionFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
+                    .text(Component.translatable(key + ".description"))
+                    .build();
         }
 
-        BiFunction<T, String, OptionDescription.Builder> finalDescriptionBuilderFactory = descriptionBuilderFactory;
+        var finalDescriptionFactory = descriptionFactory;
         Option.Builder<T> builder = Option.<T>createBuilder()
                 .name(Component.translatable(translationKey))
-                .description(value -> finalDescriptionBuilderFactory.apply(value, translationKey).build())
+                .description(value -> finalDescriptionFactory.apply(value, translationKey))
                 .binding(entry.defaultValue(), entry::get, entry::set)
                 .controller(controllerFactory);
 
@@ -136,5 +172,23 @@ public class SettingsGuiFactory {
         }
 
         return builder.build();
+    }
+
+    private static <T> void bindDependentsAvailability(
+            Option<T> sourceOption,
+            List<Option<?>> dependentOptions,
+            Function<T, Boolean> availabilityPredicate
+    ) {
+        for (var dependant : dependentOptions) {
+            dependant.setAvailable(availabilityPredicate.apply(sourceOption.pendingValue()));
+        }
+
+        sourceOption.addEventListener((option, event) -> {
+            if (event == OptionEventListener.Event.INITIAL || event == OptionEventListener.Event.STATE_CHANGE) {
+                for (var dependant : dependentOptions) {
+                    dependant.setAvailable(availabilityPredicate.apply(option.pendingValue()));
+                }
+            }
+        });
     }
 }

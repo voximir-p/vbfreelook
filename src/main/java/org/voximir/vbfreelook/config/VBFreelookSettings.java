@@ -7,6 +7,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
 import org.voximir.vbfreelook.config.enums.FreelookPerspective;
+import org.voximir.vbfreelook.config.enums.ShouldSwitchBackPerspective;
+import org.voximir.vbfreelook.config.enums.SwitchBackPerspective;
 
 public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> {
     private static final VBFreelookSettings INSTANCE = new VBFreelookSettings();
@@ -29,17 +31,43 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
     Controls controls = new Controls();
 
     class Behavior {
-        Basic basic = new Basic();
+        Perspective perspective = new Perspective();
 
-        class Basic {
-            private final ConfigEntry<Boolean> switchPerspective = register("switch_perspective", true, Codec.BOOL);
-            private final ConfigEntry<FreelookPerspective> freelookPerspective = register("freelook_perspective", FreelookPerspective.THIRD_PERSON, FreelookPerspective.CODEC);
+        class Perspective {
+            private final ConfigEntry<Boolean> shouldSwitchPerspective = register(
+                    "should_switch_perspective",
+                    true,
+                    Codec.BOOL
+            );
+            private final ConfigEntry<FreelookPerspective> freelookPerspective = register(
+                    "freelook_perspective",
+                    FreelookPerspective.THIRD_PERSON,
+                    FreelookPerspective.CODEC
+            );
+            private final ConfigEntry<ShouldSwitchBackPerspective> shouldSwitchBackPerspective = register(
+                    "should_switch_back_perspective",
+                    ShouldSwitchBackPerspective.ALWAYS,
+                    ShouldSwitchBackPerspective.CODEC
+            );
+            private final ConfigEntry<SwitchBackPerspective> switchBackPerspective = register(
+                    "switch_back_perspective",
+                    SwitchBackPerspective.ORIGINAL,
+                    SwitchBackPerspective.CODEC
+            );
         }
     }
 
     class Controls {
-        private final ConfigEntry<FreelookKeyBehavior> freelookKeyBehavior = register("freelook_key_behavior", FreelookKeyBehavior.SMART, FreelookKeyBehavior.CODEC);
-        private final ConfigEntry<Integer> smartThreshold = register("smart_threshold", 150, Codec.INT);
+        private final ConfigEntry<FreelookKeyBehavior> freelookKeyBehavior = register(
+                "freelook_key_behavior",
+                FreelookKeyBehavior.SMART,
+                FreelookKeyBehavior.CODEC
+        );
+        private final ConfigEntry<Integer> smartThreshold = register(
+                "smart_threshold",
+                150,
+                Codec.INT
+        );
     }
 
     public VBFreelookSettings() {
@@ -50,12 +78,20 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         return INSTANCE;
     }
 
-    public ConfigEntry<Boolean> getSwitchPerspective() {
-        return behavior.basic.switchPerspective;
+    public ConfigEntry<Boolean> getShouldSwitchPerspective() {
+        return behavior.perspective.shouldSwitchPerspective;
     }
 
     public ConfigEntry<FreelookPerspective> getFreelookPerspective() {
-        return behavior.basic.freelookPerspective;
+        return behavior.perspective.freelookPerspective;
+    }
+
+    public ConfigEntry<ShouldSwitchBackPerspective> getShouldSwitchBackPerspective() {
+        return behavior.perspective.shouldSwitchBackPerspective;
+    }
+
+    public ConfigEntry<SwitchBackPerspective> getSwitchBackPerspective() {
+        return behavior.perspective.switchBackPerspective;
     }
 
     public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {

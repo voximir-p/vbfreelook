@@ -3,15 +3,38 @@ config.vbfreelook:
   category:
     behavior:
       .: Behavior
-      basic:
-        .: Basic
+      perspective:
+        .: Perspective
         option:
-          switch_perspective:
-            .: Switch Perspective
+          should_switch_perspective:
+            .: Should Switch Perspective
             description: Whether to switch perspective when freelook is activated.
           freelook_perspective:
             .: Freelook Perspective
             description: The perspective you switch to when freelook is activated.
+          should_switch_back_perspective:
+            .: Should Switch Back Perspective
+            description:
+              .: |+
+                Whether to switch back to the desired perspective when freelook is deactivated.
+
+
+              always: >
+                §lAlways§r: Switch back to the desired perspective when freelook is deactivated.
+              if_unchanged: >
+                §lIf Unchanged§r: Only switch back to the desired perspective
+                if the perspective hasn't been changed while freelook was active.
+              never: >
+                §lNever§r: Keep the current perspective when freelook is deactivated.
+          switch_back_perspective:
+            .: Switch Back Perspective
+            description:
+              .: >
+                Perspective to switch to when freelook is deactivated.
+              original: |+
+
+
+                §lOriginal Perspective§r: The last perspective before freelook was activated.
     controls:
       .: Controls
       option:
@@ -22,7 +45,7 @@ config.vbfreelook:
               The behavior of the freelook key.
 
 
-            smart: |
+            smart: >
               §lSmart§r: Tapping behaves like toggle, holding behaves like hold.
             hold: >
               §lHold§r: You have to hold the key to freelook.
@@ -39,6 +62,15 @@ config.vbfreelook:
       smart: Smart
       toggle: Toggle
     freelook_perspective:
+      first_person: First Person
+      second_person: Second Person
+      third_person: Third Person
+    should_switch_back_perspective:
+      always: Always
+      if_unchanged: If Unchanged
+      never: Never
+    switch_back_perspective:
+      original: Original Perspective
       first_person: First Person
       second_person: Second Person
       third_person: Third Person

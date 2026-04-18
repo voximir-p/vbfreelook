@@ -4,6 +4,7 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
+import org.voximir.vbfreelook.config.enums.SwitchBackPerspective;
 
 public class FreelookState {
     private static final long NANOS_PER_MILLISECOND = 1_000_000L;
@@ -18,7 +19,7 @@ public class FreelookState {
         active = true;
         lastPerspective = client.options.getCameraType();
 
-        if (VBFreelookSettings.getInstance().getSwitchPerspective().get()) {
+        if (VBFreelookSettings.getInstance().getShouldSwitchPerspective().get()) {
             client.options.setCameraType(VBFreelookSettings.getInstance()
                     .getFreelookPerspective()
                     .get()
@@ -34,8 +35,19 @@ public class FreelookState {
 
         active = false;
 
-        if (VBFreelookSettings.getInstance().getSwitchPerspective().get()) {
-            client.options.setCameraType(lastPerspective);
+        if (VBFreelookSettings.getInstance().getShouldSwitchPerspective().get()) {
+            switch (VBFreelookSettings.getInstance().getShouldSwitchBackPerspective().get()) {
+                case ALWAYS -> SwitchBackPerspective.switchBackPerspective(client, lastPerspective);
+                case IF_UNCHANGED -> {
+                    var freelookPerspective = VBFreelookSettings.getInstance()
+                            .getFreelookPerspective()
+                            .get()
+                            .asCameraType();
+                    if (client.options.getCameraType() == freelookPerspective) {
+                        SwitchBackPerspective.switchBackPerspective(client, lastPerspective);
+                    }
+                }
+            }
         }
 
         VBFreelook.LOGGER.debug("Freelook deactivated");
