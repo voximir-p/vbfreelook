@@ -61,8 +61,12 @@ public abstract class CameraMixin {
             index = 0
     )
     private float modifyZoomOffset(float original) {
-        var progress = FreelookState.getZoomingOutProgress();
-        if (!(this.entity instanceof LocalPlayer && progress < 1.0f)) {
+        if (!(this.entity instanceof LocalPlayer) || !FreelookState.isActive()) {
+            return original;
+        }
+
+        float progress = FreelookState.getZoomingOutProgress();
+        if (progress >= 1.0f) {
             return original;
         }
 
