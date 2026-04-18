@@ -6,9 +6,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 
 public enum FreelookPerspective implements NameableEnum, StringRepresentable {
+    THIRD_PERSON,
     FIRST_PERSON,
-    SECOND_PERSON,
-    THIRD_PERSON;
+    SECOND_PERSON;
 
     public static final EnumCodec<FreelookPerspective> CODEC =
             StringRepresentable.fromEnum(FreelookPerspective::values);
