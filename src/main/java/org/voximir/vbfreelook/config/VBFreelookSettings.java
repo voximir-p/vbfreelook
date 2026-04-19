@@ -24,13 +24,13 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         }
     }
 
-    Behavior behavior = new Behavior();
-    Controls controls = new Controls();
+    final Behavior behavior = new Behavior();
+    final Controls controls = new Controls();
 
     class Behavior {
-        Perspective perspective = new Perspective();
-        Transitions transitions = new Transitions();
-        Other other = new Other();
+        final Perspective perspective = new Perspective();
+        final Transitions transitions = new Transitions();
+        final Other other = new Other();
 
         class Perspective {
             private final ConfigEntry<Boolean> shouldSwitchPerspective = register(
