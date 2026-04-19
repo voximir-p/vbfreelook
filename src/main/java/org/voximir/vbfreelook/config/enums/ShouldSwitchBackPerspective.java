@@ -19,6 +19,6 @@ public enum ShouldSwitchBackPerspective implements NameableEnum, StringRepresent
 
     @Override
     public String getSerializedName() {
-        return this.name().toLowerCase();
+        return name().toLowerCase();
     }
 }

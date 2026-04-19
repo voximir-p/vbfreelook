@@ -23,7 +23,7 @@ public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return this.name().toLowerCase();
+        return name().toLowerCase();
     }
 
     public CameraType asCameraType() {

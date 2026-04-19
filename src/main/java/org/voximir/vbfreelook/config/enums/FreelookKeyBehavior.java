@@ -19,6 +19,6 @@ public enum FreelookKeyBehavior implements NameableEnum, StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return this.name().toLowerCase();
+        return name().toLowerCase();
     }
 }
