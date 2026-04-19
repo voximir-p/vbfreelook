@@ -57,7 +57,7 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         class Transitions {
             private final ConfigEntry<Integer> zoomOutTime = register(
                     "zoom_out_time",
-                    500,
+                    1000,
                     Codec.INT
             );
             private final ConfigEntry<TransitionType> zoomOutTransition = register(

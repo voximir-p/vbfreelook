@@ -39,7 +39,7 @@ config.vbfreelook:
         zoom_out_time:
             .: Zoom Out Time
             description: >
-              How many milliseconds it takes to zoom out from first person
+              How many seconds it takes to zoom out from first person
               to second/third person when freelook is activated.
 
               §lSet it to zero to disable the transition.§r

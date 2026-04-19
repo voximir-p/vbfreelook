@@ -165,9 +165,9 @@ public class SettingsGuiFactory {
                             group.dot("zoom_out_time"),
                             VBFreelookSettings.getInstance().getZoomOutTime(),
                             option -> IntegerSliderControllerBuilder.create(option)
-                                    .range(0, 2000)
-                                    .step(10)
-                                    .formatValue(ms -> Component.literal(String.format("%d ms", ms))),
+                                    .range(0, 5000)
+                                    .step(100)
+                                    .formatValue(ms -> Component.literal(String.format("%.1f secs", ms / 1000.0f))),
                             new OptionFlag[0],
                             null
                     );
