@@ -66,10 +66,6 @@ config.vbfreelook:
             How many milliseconds you have to hold the freelook key
             for it to be considered a hold rather than a tap.
   enum:
-    freelook_key_behavior:
-      hold: Hold
-      smart: Smart
-      toggle: Toggle
     freelook_perspective:
       first_person: First Person
       second_person: Second Person
@@ -83,6 +79,10 @@ config.vbfreelook:
       first_person: First Person
       second_person: Second Person
       third_person: Third Person
+    freelook_key_behavior:
+      hold: Hold
+      smart: Smart
+      toggle: Toggle
 
 key:
   category.vbfreelook: Voximir's Better Freelook
