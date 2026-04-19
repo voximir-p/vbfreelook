@@ -8,9 +8,6 @@ config.vbfreelook:
         should_switch_perspective:
           .: Should Switch Perspective
           description: Whether to switch perspective when freelook is activated.
-        freelook_perspective:
-          .: Freelook Perspective
-          description: The perspective you switch to when freelook is activated.
         should_switch_back_perspective:
           .: Should Switch Back Perspective
           description:
@@ -25,6 +22,9 @@ config.vbfreelook:
               if the perspective hasn't been changed while freelook was active.
             never: >
               §lNever§r: Keep the current perspective when freelook is deactivated.
+        freelook_perspective:
+          .: Freelook Perspective
+          description: The perspective you switch to when freelook is activated.
         switch_back_perspective:
           .: Switch Back Perspective
           description:
@@ -47,6 +47,13 @@ config.vbfreelook:
             .: Zoom Out Transition
             description: >
               The transition type used when zooming out.
+      other:
+         .: Other
+         camera_no_clip:
+           .: Camera No Clip
+           description: >
+             Enable this to allow the camera to clip through blocks when in
+             second/third person perspective while freelook is active.
     controls:
       .: Controls
       basic:
@@ -70,14 +77,14 @@ config.vbfreelook:
             How many milliseconds you have to hold the freelook key
             for it to be considered a hold rather than a tap.
   enum:
-    freelook_perspective:
-      first_person: First Person
-      second_person: Second Person
-      third_person: Third Person
     should_switch_back_perspective:
       always: Always
       if_unchanged: If Unchanged
       never: Never
+    freelook_perspective:
+      first_person: First Person
+      second_person: Second Person
+      third_person: Third Person
     switch_back_perspective:
       original: Original Perspective
       first_person: First Person

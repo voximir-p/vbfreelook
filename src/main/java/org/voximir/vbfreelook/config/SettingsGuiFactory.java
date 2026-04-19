@@ -103,14 +103,6 @@ public class SettingsGuiFactory {
                             null
                     );
 
-                    freelookPerspectiveOption = registerOption(
-                            group.dot("freelook_perspective"),
-                            VBFreelookSettings.getInstance().getFreelookPerspective(),
-                            option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
-                            new OptionFlag[0],
-                            null
-                    );
-
                     var shouldSwitchBackPerspectiveOption = registerOption(
                             group.dot("should_switch_back_perspective"),
                             VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
@@ -119,6 +111,14 @@ public class SettingsGuiFactory {
                             (value, descKey) -> OptionDescription.createBuilder()
                                     .text(descKey.asComponent()
                                             .append(descKey.dotEnum(value).asComponent()))
+                    );
+
+                    freelookPerspectiveOption = registerOption(
+                            group.dot("freelook_perspective"),
+                            VBFreelookSettings.getInstance().getFreelookPerspective(),
+                            option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
+                            new OptionFlag[0],
+                            null
                     );
 
                     var switchBackPerspectiveOption = registerOption(
@@ -143,8 +143,8 @@ public class SettingsGuiFactory {
 
                     bindDependentsAvailability(
                             shouldSwitchPerspectiveOption,
-                            List.of(freelookPerspectiveOption,
-                                    shouldSwitchBackPerspectiveOption,
+                            List.of(shouldSwitchBackPerspectiveOption,
+                                    freelookPerspectiveOption,
                                     switchBackPerspectiveOption),
                             Boolean::booleanValue
                     );
@@ -152,8 +152,8 @@ public class SettingsGuiFactory {
                     return OptionGroup.createBuilder()
                             .name(group.asComponent())
                             .option(shouldSwitchPerspectiveOption)
-                            .option(freelookPerspectiveOption)
                             .option(shouldSwitchBackPerspectiveOption)
+                            .option(freelookPerspectiveOption)
                             .option(switchBackPerspectiveOption)
                             .build();
                 }
@@ -204,6 +204,23 @@ public class SettingsGuiFactory {
                             .option(zoomOutTransitionOption)
                             .build();
                 }
+
+                OptionGroup createOtherGroup() {
+                    TranslationKey group = category.dot("other");
+
+                    var cameraNoClipOption = registerOption(
+                            group.dot("camera_no_clip"),
+                            VBFreelookSettings.getInstance().getCameraNoClip(),
+                            TickBoxControllerBuilder::create,
+                            new OptionFlag[0],
+                            null
+                    );
+
+                    return OptionGroup.createBuilder()
+                            .name(group.asComponent())
+                            .option(cameraNoClipOption)
+                            .build();
+                }
             }
 
             Groups groups = new Groups();
@@ -212,6 +229,7 @@ public class SettingsGuiFactory {
                     .name(category.asComponent())
                     .group(groups.createPerspectiveGroup())
                     .group(groups.createTransitionGroup())
+                    .group(groups.createOtherGroup())
                     .build();
         }
 

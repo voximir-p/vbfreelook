@@ -30,6 +30,7 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
     class Behavior {
         Perspective perspective = new Perspective();
         Transitions transitions = new Transitions();
+        Other other = new Other();
 
         class Perspective {
             private final ConfigEntry<Boolean> shouldSwitchPerspective = register(
@@ -37,15 +38,15 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
                     true,
                     Codec.BOOL
             );
-            private final ConfigEntry<FreelookPerspective> freelookPerspective = register(
-                    "freelook_perspective",
-                    FreelookPerspective.THIRD_PERSON,
-                    FreelookPerspective.CODEC
-            );
             private final ConfigEntry<ShouldSwitchBackPerspective> shouldSwitchBackPerspective = register(
                     "should_switch_back_perspective",
                     ShouldSwitchBackPerspective.ALWAYS,
                     ShouldSwitchBackPerspective.CODEC
+            );
+            private final ConfigEntry<FreelookPerspective> freelookPerspective = register(
+                    "freelook_perspective",
+                    FreelookPerspective.THIRD_PERSON,
+                    FreelookPerspective.CODEC
             );
             private final ConfigEntry<SwitchBackPerspective> switchBackPerspective = register(
                     "switch_back_perspective",
@@ -64,6 +65,14 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
                     "zoom_out_transition",
                     TransitionType.EASE_OUT_EXP,
                     TransitionType.CODEC
+            );
+        }
+
+        class Other {
+            private final ConfigEntry<Boolean> cameraNoClip = register(
+                    "camera_no_clip",
+                    false,
+                    Codec.BOOL
             );
         }
     }
@@ -111,6 +120,10 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
 
     public ConfigEntry<TransitionType> getZoomOutTransition() {
         return behavior.transitions.zoomOutTransition;
+    }
+
+    public ConfigEntry<Boolean> getCameraNoClip() {
+        return behavior.other.cameraNoClip;
     }
 
     public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
