@@ -1,7 +1,9 @@
 package org.voximir.vbfreelook.utilities;
 
+import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
@@ -27,8 +29,8 @@ public class TranslationKey {
         return new TranslationKey(this, part);
     }
 
-    public TranslationKey dotEnum(Enum<?> value) {
-        return dot(value.name().toLowerCase(Locale.ROOT));
+    public <T extends StringRepresentable> TranslationKey dotEnum(T value) {
+        return dot(value.getSerializedName());
     }
 
     private String build() {
