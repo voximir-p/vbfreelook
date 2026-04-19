@@ -1,11 +1,8 @@
 package org.voximir.vbfreelook.utilities;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
-
-import java.util.Locale;
 
 public class TranslationKey {
     private final TranslationKey parent;
