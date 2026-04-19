@@ -37,23 +37,23 @@ config.vbfreelook:
       transition:
         .: Transition
         zoom_out_time:
-            .: Zoom Out Time
-            description: >
-              How many seconds it takes to zoom out from first person
-              to second/third person when freelook is activated.
-
-              §lSet it to zero to disable the transition.§r
+          .: Zoom Out Time
+          description: >
+            How many seconds it takes to zoom out from first person
+            to second/third person when freelook is activated.
+            
+            §lSet it to zero to disable the transition.§r
         zoom_out_transition:
-            .: Zoom Out Transition
-            description: >
-              The transition type used when zooming out.
+          .: Zoom Out Transition
+          description: >
+            The transition type used when zooming out.
       other:
-         .: Other
-         camera_no_clip:
-           .: Camera No Clip
-           description: >
-             Enable this to allow the camera to clip through blocks when in
-             second/third person perspective while freelook is active.
+        .: Other
+        camera_no_clip:
+          .: Camera No Clip
+          description: >
+            Enable this to allow the camera to clip through blocks when in
+            second/third person perspective while freelook is active.
     controls:
       .: Controls
       basic:
