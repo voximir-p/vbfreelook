@@ -5,6 +5,8 @@ import net.minecraft.client.CameraType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Locale;
+
 public enum FreelookPerspective implements NameableEnum, StringRepresentable {
     THIRD_PERSON,
     FIRST_PERSON,
@@ -20,7 +22,7 @@ public enum FreelookPerspective implements NameableEnum, StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ROOT);
     }
 
     public CameraType asCameraType() {

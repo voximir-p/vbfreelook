@@ -7,6 +7,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
 
+import java.util.Locale;
+
 public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
     ORIGINAL,
     FIRST_PERSON,
@@ -23,7 +25,7 @@ public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ROOT);
     }
 
     public CameraType asCameraType() {

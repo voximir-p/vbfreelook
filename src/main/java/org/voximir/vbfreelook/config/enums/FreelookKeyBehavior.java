@@ -4,6 +4,8 @@ import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Locale;
+
 public enum FreelookKeyBehavior implements NameableEnum, StringRepresentable {
     SMART,
     HOLD,
@@ -19,6 +21,6 @@ public enum FreelookKeyBehavior implements NameableEnum, StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ROOT);
     }
 }
