@@ -39,7 +39,7 @@ public class SettingsGuiFactory {
     }
 
     private static TranslationKey getCategory(String key) {
-        return getConfig("category").then(key);
+        return getConfig("category").dot(key);
     }
 
     private static <T> Option<T> registerOption(
@@ -49,7 +49,7 @@ public class SettingsGuiFactory {
             OptionFlag[] flags,
             BiFunction<T, TranslationKey, OptionDescription.Builder> descriptionBuilderFactory
     ) {
-        var descriptionKey = translationKey.then("description");
+        var descriptionKey = translationKey.dot("description");
         if (descriptionBuilderFactory == null) {
             descriptionBuilderFactory = (ignoredValue, key) -> OptionDescription.createBuilder()
                     .text(key.asComponent());
@@ -92,14 +92,14 @@ public class SettingsGuiFactory {
             TranslationKey category = getCategory("behavior");
 
             class Groups {
-                private static Option<Boolean> shouldSwitchPerspectiveOption;
-                private static Option<FreelookPerspective> freelookPerspectiveOption;
+                static Option<Boolean> shouldSwitchPerspectiveOption;
+                static Option<FreelookPerspective> freelookPerspectiveOption;
 
-                private OptionGroup createPerspectiveGroup() {
-                    TranslationKey group = category.then("perspective");
+                OptionGroup createPerspectiveGroup() {
+                    TranslationKey group = category.dot("perspective");
 
                     shouldSwitchPerspectiveOption = registerOption(
-                            group.then("should_switch_perspective"),
+                            group.dot("should_switch_perspective"),
                             VBFreelookSettings.getInstance().getShouldSwitchPerspective(),
                             TickBoxControllerBuilder::create,
                             new OptionFlag[0],
@@ -107,7 +107,7 @@ public class SettingsGuiFactory {
                     );
 
                     freelookPerspectiveOption = registerOption(
-                            group.then("freelook_perspective"),
+                            group.dot("freelook_perspective"),
                             VBFreelookSettings.getInstance().getFreelookPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
                             new OptionFlag[0],
@@ -115,24 +115,24 @@ public class SettingsGuiFactory {
                     );
 
                     var shouldSwitchBackPerspectiveOption = registerOption(
-                            group.then("should_switch_back_perspective"),
+                            group.dot("should_switch_back_perspective"),
                             VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(ShouldSwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, descKey) -> OptionDescription.createBuilder()
                                     .text(descKey.asComponent()
-                                            .append(descKey.thenEnum(value).asComponent()))
+                                            .append(descKey.dotEnum(value).asComponent()))
                     );
 
                     var switchBackPerspectiveOption = registerOption(
-                            group.then("switch_back_perspective"),
+                            group.dot("switch_back_perspective"),
                             VBFreelookSettings.getInstance().getSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(SwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, key) -> {
                                 var txt = key.asComponent();
                                 if (value == SwitchBackPerspective.ORIGINAL) {
-                                    txt.append(key.thenEnum(value).asComponent());
+                                    txt.append(key.dotEnum(value).asComponent());
                                 }
                                 return OptionDescription.createBuilder().text(txt);
                             }
@@ -161,11 +161,11 @@ public class SettingsGuiFactory {
                             .build();
                 }
 
-                private OptionGroup createTransitionGroup() {
-                    TranslationKey group = category.then("transition");
+                OptionGroup createTransitionGroup() {
+                    TranslationKey group = category.dot("transition");
 
                     var zoomOutTimeOption = registerOption(
-                            group.then("zoom_out_time"),
+                            group.dot("zoom_out_time"),
                             VBFreelookSettings.getInstance().getZoomOutTime(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 2000)
@@ -207,21 +207,21 @@ public class SettingsGuiFactory {
             TranslationKey category = getCategory("controls");
 
             class Groups {
-                private OptionGroup createBasicGroup() {
-                    TranslationKey group = category.then("basic");
+                OptionGroup createBasicGroup() {
+                    TranslationKey group = category.dot("basic");
 
                     var freelookKeyBehaviorOption = registerOption(
-                            group.then("freelook_key_behavior"),
+                            group.dot("freelook_key_behavior"),
                             VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
                             new OptionFlag[0],
                             (value, key) -> OptionDescription.createBuilder()
                                     .text(key.asComponent()
-                                            .append(key.thenEnum(value).asComponent()))
+                                            .append(key.dotEnum(value).asComponent()))
                     );
 
                     var smartThresholdOption = registerOption(
-                            group.then("smart_threshold"),
+                            group.dot("smart_threshold"),
                             VBFreelookSettings.getInstance().getSmartThreshold(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 500)

@@ -5,7 +5,7 @@ import net.minecraft.network.chat.MutableComponent;
 
 import java.util.Locale;
 
-public final class TranslationKey {
+public class TranslationKey {
     private final TranslationKey parent;
     private final String part;
     private String cached;
@@ -23,12 +23,12 @@ public final class TranslationKey {
         return key;
     }
 
-    public TranslationKey then(String part) {
+    public TranslationKey dot(String part) {
         return new TranslationKey(this, part);
     }
 
-    public TranslationKey thenEnum(Enum<?> value) {
-        return then(value.name().toLowerCase(Locale.ROOT));
+    public TranslationKey dotEnum(Enum<?> value) {
+        return dot(value.name().toLowerCase(Locale.ROOT));
     }
 
     private String build() {
