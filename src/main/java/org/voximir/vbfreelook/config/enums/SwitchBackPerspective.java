@@ -18,7 +18,7 @@ public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("config.vbfreelook.enum.switch_back_perspective." + this.name().toLowerCase());
+        return Component.translatable("config.vbfreelook.enum.switch_back_perspective." + getSerializedName());
     }
 
     @Override

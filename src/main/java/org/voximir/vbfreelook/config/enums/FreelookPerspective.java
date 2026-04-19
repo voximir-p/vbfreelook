@@ -15,7 +15,7 @@ public enum FreelookPerspective implements NameableEnum, StringRepresentable {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("config.vbfreelook.enum.freelook_perspective." + this.name().toLowerCase());
+        return Component.translatable("config.vbfreelook.enum.freelook_perspective." + getSerializedName());
     }
 
     @Override
