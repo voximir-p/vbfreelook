@@ -94,10 +94,10 @@ public class FreelookState {
         return active;
     }
 
-    public static float getZoomingOutProgress() {
+    public static double getZoomingOutProgress() {
         if (!active) return 0.0f;
         var elapsed = System.nanoTime() - zoomOutStart;
         var zoomOutTimeNanos = VBFreelookSettings.getInstance().getZoomOutTime().get() * NANOS_PER_MILLISECOND;
-        return Math.min(1.0f, (float) elapsed / zoomOutTimeNanos);
+        return Math.min(1.0, (double) elapsed / zoomOutTimeNanos);
     }
 }

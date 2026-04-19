@@ -43,6 +43,10 @@ config.vbfreelook:
               to second/third person when freelook is activated.
 
               §lSet it to zero to disable the transition.§r
+        zoom_out_transition:
+            .: Zoom Out Transition
+            description: >
+              The transition type used when zooming out.
     controls:
       .: Controls
       basic:
@@ -79,6 +83,24 @@ config.vbfreelook:
       first_person: First Person
       second_person: Second Person
       third_person: Third Person
+    transition_type:
+      linear: Linear
+      ease:
+        in:
+          sine: Ease In Sine
+          quad: Ease In Quadratic
+          cubic: Ease In Cubic
+          exp: Ease In Exponential
+        out:
+          sine: Ease Out Sine
+          quad: Ease Out Quadratic
+          cubic: Ease Out Cubic
+          exp: Ease Out Exponential
+        in_out:
+          sine: Ease In Out Sine
+          quad: Ease In Out Quadratic
+          cubic: Ease In Out Cubic
+          exp: Ease In Out Exponential
     freelook_key_behavior:
       hold: Hold
       smart: Smart

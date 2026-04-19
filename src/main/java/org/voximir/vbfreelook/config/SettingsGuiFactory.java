@@ -9,10 +9,7 @@ import dev.isxander.yacl3.config.v3.ConfigEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.voximir.vbfreelook.VBFreelook;
-import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
-import org.voximir.vbfreelook.config.enums.FreelookPerspective;
-import org.voximir.vbfreelook.config.enums.ShouldSwitchBackPerspective;
-import org.voximir.vbfreelook.config.enums.SwitchBackPerspective;
+import org.voximir.vbfreelook.config.enums.*;
 import org.voximir.vbfreelook.utilities.TranslationKey;
 
 import java.util.List;
@@ -175,6 +172,14 @@ public class SettingsGuiFactory {
                             null
                     );
 
+                    var zoomOutTransitionOption = registerOption(
+                            group.dot("zoom_out_transition"),
+                            VBFreelookSettings.getInstance().getZoomOutTransition(),
+                            option -> EnumControllerBuilder.create(option).enumClass(TransitionType.class),
+                            new OptionFlag[0],
+                            null
+                    );
+
                     bindDependentsAvailability(
                             shouldSwitchPerspectiveOption,
                             List.of(zoomOutTimeOption),
@@ -187,9 +192,16 @@ public class SettingsGuiFactory {
                             val -> val != FreelookPerspective.FIRST_PERSON
                     );
 
+                    bindDependentsAvailability(
+                            zoomOutTimeOption,
+                            List.of(zoomOutTransitionOption),
+                            val -> val > 0
+                    );
+
                     return OptionGroup.createBuilder()
                             .name(group.asComponent())
                             .option(zoomOutTimeOption)
+                            .option(zoomOutTransitionOption)
                             .build();
                 }
             }

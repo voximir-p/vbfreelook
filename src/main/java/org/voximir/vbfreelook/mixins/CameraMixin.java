@@ -65,11 +65,12 @@ public abstract class CameraMixin {
             return original;
         }
 
-        float progress = FreelookState.getZoomingOutProgress();
-        if (progress >= 1.0f) {
+        double progress = FreelookState.getZoomingOutProgress();
+        if (progress >= 1.0 || original > -1.0f) {
             return original;
         }
 
-        return Mth.lerp(progress, -0.3f, original);
+        TransitionType transition = VBFreelookSettings.getInstance().getZoomOutTransition().get();
+        return Mth.lerp((float) transition.apply(progress), -1.0f, original);
     }
 }

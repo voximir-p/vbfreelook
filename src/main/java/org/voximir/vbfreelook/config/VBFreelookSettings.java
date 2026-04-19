@@ -5,10 +5,7 @@ import dev.isxander.yacl3.config.v3.ConfigEntry;
 import dev.isxander.yacl3.config.v3.JsonFileCodecConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import org.voximir.vbfreelook.VBFreelook;
-import org.voximir.vbfreelook.config.enums.FreelookKeyBehavior;
-import org.voximir.vbfreelook.config.enums.FreelookPerspective;
-import org.voximir.vbfreelook.config.enums.ShouldSwitchBackPerspective;
-import org.voximir.vbfreelook.config.enums.SwitchBackPerspective;
+import org.voximir.vbfreelook.config.enums.*;
 
 public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> {
     private static final VBFreelookSettings INSTANCE = new VBFreelookSettings();
@@ -63,6 +60,11 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
                     500,
                     Codec.INT
             );
+            private final ConfigEntry<TransitionType> zoomOutTransition = register(
+                    "zoom_out_transition",
+                    TransitionType.EASE_OUT_EXP,
+                    TransitionType.CODEC
+            );
         }
     }
 
@@ -105,6 +107,10 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
 
     public ConfigEntry<Integer> getZoomOutTime() {
         return behavior.transitions.zoomOutTime;
+    }
+
+    public ConfigEntry<TransitionType> getZoomOutTransition() {
+        return behavior.transitions.zoomOutTransition;
     }
 
     public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
