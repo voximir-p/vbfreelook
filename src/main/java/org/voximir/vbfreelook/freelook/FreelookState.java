@@ -17,20 +17,14 @@ public class FreelookState {
     public static void activate(Minecraft client) {
         if (active) return;
 
-        var settings = VBFreelookSettings.getInstance();
-
         active = true;
         lastPerspective = client.options.getCameraType();
         if (lastPerspective == CameraType.FIRST_PERSON) {
             zoomOutStart = System.nanoTime();
         }
 
-        if (settings.getShouldSwitchPerspective().get()) {
-            client.options.setCameraType(settings
-                    .getFreelookPerspective()
-                    .get()
-                    .asCameraType()
-            );
+        if (VBFreelookSettings.getShouldSwitchPerspective().get()) {
+            client.options.setCameraType(VBFreelookSettings.getFreelookPerspective().get().asCameraType());
         }
 
         VBFreelook.LOGGER.debug("Freelook activated");
@@ -39,14 +33,12 @@ public class FreelookState {
     public static void deactivate(Minecraft client) {
         if (!active) return;
 
-        var settings = VBFreelookSettings.getInstance();
-
         active = false;
-        if (settings.getShouldSwitchPerspective().get()) {
-            switch (settings.getShouldSwitchBackPerspective().get()) {
+        if (VBFreelookSettings.getShouldSwitchPerspective().get()) {
+            switch (VBFreelookSettings.getShouldSwitchBackPerspective().get()) {
                 case ALWAYS -> SwitchBackPerspective.switchBackPerspective(client, lastPerspective);
                 case IF_UNCHANGED -> {
-                    var freelookPerspective = settings.getFreelookPerspective().get().asCameraType();
+                    var freelookPerspective = VBFreelookSettings.getFreelookPerspective().get().asCameraType();
                     if (client.options.getCameraType() == freelookPerspective) {
                         SwitchBackPerspective.switchBackPerspective(client, lastPerspective);
                     }
@@ -63,8 +55,7 @@ public class FreelookState {
     }
 
     public static void handleKeyPressed(Minecraft client) {
-        var settings = VBFreelookSettings.getInstance();
-        var freelookKeyBehavior = settings.getFreelookKeyBehavior().get();
+        var freelookKeyBehavior = VBFreelookSettings.getFreelookKeyBehavior().get();
         switch (freelookKeyBehavior) {
             case HOLD -> activate(client);
             case TOGGLE -> toggle(client);
@@ -78,9 +69,8 @@ public class FreelookState {
     }
 
     public static void handleKeyReleased(Minecraft client) {
-        var settings = VBFreelookSettings.getInstance();
-        var freelookKeyBehavior = settings.getFreelookKeyBehavior().get();
-        var smartThreshold = settings.getSmartThreshold().get();
+        var freelookKeyBehavior = VBFreelookSettings.getFreelookKeyBehavior().get();
+        var smartThreshold = VBFreelookSettings.getSmartThreshold().get();
         switch (freelookKeyBehavior) {
             case HOLD -> deactivate(client);
             case SMART -> {
@@ -100,9 +90,8 @@ public class FreelookState {
     public static double getZoomingOutProgress() {
         if (!active) return 0.0f;
 
-        var settings = VBFreelookSettings.getInstance();
         var elapsed = System.nanoTime() - zoomOutStart;
-        var zoomOutTimeNanos = settings.getZoomOutTime().get() * NANOS_PER_MILLISECOND;
+        var zoomOutTimeNanos = VBFreelookSettings.getZoomOutTime().get() * NANOS_PER_MILLISECOND;
         return Math.min(1.0, (double) elapsed / zoomOutTimeNanos);
     }
 }

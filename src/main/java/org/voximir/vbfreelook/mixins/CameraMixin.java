@@ -76,14 +76,15 @@ public abstract class CameraMixin {
         boolean isFreelookActive = FreelookState.isActive();
         boolean isOriginalCloser = original > -MIN_FRELOOK_CAMERA_DISTANCE;
         boolean isFreelookPerspectiveFirstPerson =
-                VBFreelookSettings.getInstance().getFreelookPerspective().get() == FreelookPerspective.FIRST_PERSON;
+                VBFreelookSettings.getFreelookPerspective().get() == FreelookPerspective.FIRST_PERSON;
+        boolean isShouldSwitchPerspectiveEnabled = VBFreelookSettings.getShouldSwitchPerspective().get();
 
-        if (!isLocalPlayer || !isFreelookActive || isOriginalCloser || isFreelookPerspectiveFirstPerson) {
+        if (!isLocalPlayer || !isFreelookActive || isOriginalCloser || isFreelookPerspectiveFirstPerson || !isShouldSwitchPerspectiveEnabled) {
             return original;
         }
 
         double progress = FreelookState.getZoomingOutProgress();
-        TransitionType transition = VBFreelookSettings.getInstance().getZoomOutTransition().get();
+        TransitionType transition = VBFreelookSettings.getZoomOutTransition().get();
 
         return Mth.lerp((float) transition.apply(progress), -MIN_FRELOOK_CAMERA_DISTANCE, original);
     }
@@ -92,7 +93,7 @@ public abstract class CameraMixin {
     private void disableCollisionCheck(float cameraDist, CallbackInfoReturnable<Float> cir) {
         boolean isLocalPlayer = this.entity instanceof LocalPlayer;
         boolean isFreelookActive = FreelookState.isActive();
-        boolean isCameraNoClipEnabled = VBFreelookSettings.getInstance().getCameraNoClip().get();
+        boolean isCameraNoClipEnabled = VBFreelookSettings.getCameraNoClip().get();
 
         if (isLocalPlayer && isFreelookActive && isCameraNoClipEnabled) {
             cir.setReturnValue(cameraDist);

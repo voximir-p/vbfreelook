@@ -30,7 +30,7 @@ public enum SwitchBackPerspective implements ConfigEnum {
     }
 
     public static void switchBackPerspective(Minecraft client, CameraType lastPerspective) {
-        var targetPerspective = VBFreelookSettings.getInstance().getSwitchBackPerspective().get().asCameraType();
+        var targetPerspective = VBFreelookSettings.getSwitchBackPerspective().get().asCameraType();
         if (targetPerspective == null) {
             client.options.setCameraType(lastPerspective);
         } else {

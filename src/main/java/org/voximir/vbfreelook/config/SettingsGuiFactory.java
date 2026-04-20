@@ -87,7 +87,7 @@ public final class SettingsGuiFactory {
 
                     shouldSwitchPerspectiveOption = registerOption(
                             group.dot("should_switch_perspective"),
-                            VBFreelookSettings.getInstance().getShouldSwitchPerspective(),
+                            VBFreelookSettings.getShouldSwitchPerspective(),
                             TickBoxControllerBuilder::create,
                             new OptionFlag[0],
                             null
@@ -95,7 +95,7 @@ public final class SettingsGuiFactory {
 
                     var shouldSwitchBackPerspectiveOption = registerOption(
                             group.dot("should_switch_back_perspective"),
-                            VBFreelookSettings.getInstance().getShouldSwitchBackPerspective(),
+                            VBFreelookSettings.getShouldSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(ShouldSwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, descKey) -> OptionDescription.createBuilder()
@@ -105,7 +105,7 @@ public final class SettingsGuiFactory {
 
                     freelookPerspectiveOption = registerOption(
                             group.dot("freelook_perspective"),
-                            VBFreelookSettings.getInstance().getFreelookPerspective(),
+                            VBFreelookSettings.getFreelookPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookPerspective.class),
                             new OptionFlag[0],
                             null
@@ -113,7 +113,7 @@ public final class SettingsGuiFactory {
 
                     var switchBackPerspectiveOption = registerOption(
                             group.dot("switch_back_perspective"),
-                            VBFreelookSettings.getInstance().getSwitchBackPerspective(),
+                            VBFreelookSettings.getSwitchBackPerspective(),
                             option -> EnumControllerBuilder.create(option).enumClass(SwitchBackPerspective.class),
                             new OptionFlag[0],
                             (value, key) -> {
@@ -153,7 +153,7 @@ public final class SettingsGuiFactory {
 
                     var zoomOutTimeOption = registerOption(
                             group.dot("zoom_out_time"),
-                            VBFreelookSettings.getInstance().getZoomOutTime(),
+                            VBFreelookSettings.getZoomOutTime(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 5000)
                                     .step(100)
@@ -164,7 +164,7 @@ public final class SettingsGuiFactory {
 
                     var zoomOutTransitionOption = registerOption(
                             group.dot("zoom_out_transition"),
-                            VBFreelookSettings.getInstance().getZoomOutTransition(),
+                            VBFreelookSettings.getZoomOutTransition(),
                             option -> EnumControllerBuilder.create(option).enumClass(TransitionType.class),
                             new OptionFlag[0],
                             null
@@ -202,7 +202,7 @@ public final class SettingsGuiFactory {
 
                     var cameraNoClipOption = registerOption(
                             group.dot("camera_no_clip"),
-                            VBFreelookSettings.getInstance().getCameraNoClip(),
+                            VBFreelookSettings.getCameraNoClip(),
                             TickBoxControllerBuilder::create,
                             new OptionFlag[0],
                             null
@@ -234,7 +234,7 @@ public final class SettingsGuiFactory {
 
                     var freelookKeyBehaviorOption = registerOption(
                             group.dot("freelook_key_behavior"),
-                            VBFreelookSettings.getInstance().getFreelookKeyBehavior(),
+                            VBFreelookSettings.getFreelookKeyBehavior(),
                             option -> EnumControllerBuilder.create(option).enumClass(FreelookKeyBehavior.class),
                             new OptionFlag[0],
                             (value, key) -> OptionDescription.createBuilder()
@@ -244,7 +244,7 @@ public final class SettingsGuiFactory {
 
                     var smartThresholdOption = registerOption(
                             group.dot("smart_threshold"),
-                            VBFreelookSettings.getInstance().getSmartThreshold(),
+                            VBFreelookSettings.getSmartThreshold(),
                             option -> IntegerSliderControllerBuilder.create(option)
                                     .range(0, 500)
                                     .step(10)

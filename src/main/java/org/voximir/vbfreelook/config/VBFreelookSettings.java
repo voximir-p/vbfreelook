@@ -98,39 +98,39 @@ public class VBFreelookSettings extends JsonFileCodecConfig<VBFreelookSettings> 
         return INSTANCE;
     }
 
-    public ConfigEntry<Boolean> getShouldSwitchPerspective() {
-        return behavior.perspective.shouldSwitchPerspective;
+    public static ConfigEntry<Boolean> getShouldSwitchPerspective() {
+        return INSTANCE.behavior.perspective.shouldSwitchPerspective;
     }
 
-    public ConfigEntry<FreelookPerspective> getFreelookPerspective() {
-        return behavior.perspective.freelookPerspective;
+    public static ConfigEntry<FreelookPerspective> getFreelookPerspective() {
+        return INSTANCE.behavior.perspective.freelookPerspective;
     }
 
-    public ConfigEntry<ShouldSwitchBackPerspective> getShouldSwitchBackPerspective() {
-        return behavior.perspective.shouldSwitchBackPerspective;
+    public static ConfigEntry<ShouldSwitchBackPerspective> getShouldSwitchBackPerspective() {
+        return INSTANCE.behavior.perspective.shouldSwitchBackPerspective;
     }
 
-    public ConfigEntry<SwitchBackPerspective> getSwitchBackPerspective() {
-        return behavior.perspective.switchBackPerspective;
+    public static ConfigEntry<SwitchBackPerspective> getSwitchBackPerspective() {
+        return INSTANCE.behavior.perspective.switchBackPerspective;
     }
 
-    public ConfigEntry<Integer> getZoomOutTime() {
-        return behavior.transitions.zoomOutTime;
+    public static ConfigEntry<Integer> getZoomOutTime() {
+        return INSTANCE.behavior.transitions.zoomOutTime;
     }
 
-    public ConfigEntry<TransitionType> getZoomOutTransition() {
-        return behavior.transitions.zoomOutTransition;
+    public static ConfigEntry<TransitionType> getZoomOutTransition() {
+        return INSTANCE.behavior.transitions.zoomOutTransition;
     }
 
-    public ConfigEntry<Boolean> getCameraNoClip() {
-        return behavior.other.cameraNoClip;
+    public static ConfigEntry<Boolean> getCameraNoClip() {
+        return INSTANCE.behavior.other.cameraNoClip;
     }
 
-    public ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
-        return controls.freelookKeyBehavior;
+    public static ConfigEntry<FreelookKeyBehavior> getFreelookKeyBehavior() {
+        return INSTANCE.controls.freelookKeyBehavior;
     }
 
-    public ConfigEntry<Integer> getSmartThreshold() {
-        return controls.smartThreshold;
+    public static ConfigEntry<Integer> getSmartThreshold() {
+        return INSTANCE.controls.smartThreshold;
     }
 }
