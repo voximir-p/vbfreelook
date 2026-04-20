@@ -22,7 +22,7 @@ import org.voximir.vbfreelook.freelook.FreelookState;
 @Mixin(Camera.class)
 public abstract class CameraMixin {
     @Unique
-    private static final float MIN_FRELOOK_CAMERA_DISTANCE = 1.0f;
+    private static final float MIN_CAMERA_DISTANCE = 1.0f;
 
     @Unique
     private boolean needsInitialCameraSync = true;
@@ -74,7 +74,7 @@ public abstract class CameraMixin {
     private float zoomOutWithTransition(float original) {
         boolean isLocalPlayer = this.entity instanceof LocalPlayer;
         boolean isFreelookActive = FreelookState.isActive();
-        boolean isOriginalCloser = original > -MIN_FRELOOK_CAMERA_DISTANCE;
+        boolean isOriginalCloser = original > -MIN_CAMERA_DISTANCE;
         boolean isFreelookPerspectiveFirstPerson =
                 VBFreelookSettings.getFreelookPerspective().get() == FreelookPerspective.FIRST_PERSON;
         boolean isShouldSwitchPerspectiveEnabled = VBFreelookSettings.getShouldSwitchPerspective().get();
@@ -86,7 +86,7 @@ public abstract class CameraMixin {
         double progress = FreelookState.getZoomingOutProgress();
         TransitionType transition = VBFreelookSettings.getZoomOutTransition().get();
 
-        return Mth.lerp((float) transition.apply(progress), -MIN_FRELOOK_CAMERA_DISTANCE, original);
+        return Mth.lerp((float) transition.apply(progress), -MIN_CAMERA_DISTANCE, original);
     }
 
     @Inject(method = "getMaxZoom", at = @At("HEAD"), cancellable = true)
