@@ -15,12 +15,11 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class SettingsGuiFactory {
-    public static Screen createSettingsGui(Screen parent) {
-        return new SettingsGuiFactory().createGui(parent);
+public final class SettingsGuiFactory {
+    private SettingsGuiFactory() {
     }
 
-    private Screen createGui(Screen parent) {
+    public static Screen createSettingsGui(Screen parent) {
         return YetAnotherConfigLib.createBuilder()
                 .title(TranslationKey.getConfigFor("title").asComponent())
                 .save(VBFreelookSettings.getInstance()::saveToFile)
@@ -62,14 +61,14 @@ public class SettingsGuiFactory {
             List<Option<?>> dependentOptions,
             Function<T, Boolean> availabilityPredicate
     ) {
-        for (var dependant : dependentOptions) {
-            dependant.setAvailable(availabilityPredicate.apply(sourceOption.pendingValue()));
+        for (var dependent : dependentOptions) {
+            dependent.setAvailable(availabilityPredicate.apply(sourceOption.pendingValue()));
         }
 
         sourceOption.addEventListener((option, event) -> {
             if (event == OptionEventListener.Event.INITIAL || event == OptionEventListener.Event.STATE_CHANGE) {
-                for (var dependant : dependentOptions) {
-                    dependant.setAvailable(availabilityPredicate.apply(option.pendingValue()));
+                for (var dependent : dependentOptions) {
+                    dependent.setAvailable(availabilityPredicate.apply(option.pendingValue()));
                 }
             }
         });
