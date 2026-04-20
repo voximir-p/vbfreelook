@@ -3,6 +3,7 @@ package org.voximir.vbfreelook.utilities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
+import org.voximir.vbfreelook.VBFreelook;
 
 public class TranslationKey {
     private final TranslationKey parent;
@@ -57,5 +58,17 @@ public class TranslationKey {
 
     public MutableComponent asComponent() {
         return Component.translatable(asString());
+    }
+
+    public static TranslationKey getConfigFor(String key) {
+        return TranslationKey.of("config", VBFreelook.MOD_ID, key);
+    }
+
+    public static TranslationKey getCategory(String key) {
+        return TranslationKey.getConfigFor("category").dot(key);
+    }
+
+    public static TranslationKey getEnum(String key) {
+        return TranslationKey.getConfigFor("enum").dot(key);
     }
 }

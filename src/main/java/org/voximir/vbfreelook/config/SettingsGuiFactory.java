@@ -8,7 +8,6 @@ import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.config.v3.ConfigEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.enums.*;
 import org.voximir.vbfreelook.utilities.TranslationKey;
 
@@ -23,20 +22,12 @@ public class SettingsGuiFactory {
 
     private Screen createGui(Screen parent) {
         return YetAnotherConfigLib.createBuilder()
-                .title(getConfig("title").asComponent())
+                .title(TranslationKey.getConfigFor("title").asComponent())
                 .save(VBFreelookSettings.getInstance()::saveToFile)
                 .category(Categories.createBehaviorCategory())
                 .category(Categories.createControlsCategory())
                 .build()
                 .generateScreen(parent);
-    }
-
-    private static TranslationKey getConfig(String key) {
-        return TranslationKey.of("config", VBFreelook.MOD_ID, key);
-    }
-
-    private static TranslationKey getCategory(String key) {
-        return getConfig("category").dot(key);
     }
 
     private static <T> Option<T> registerOption(
@@ -86,7 +77,7 @@ public class SettingsGuiFactory {
 
     private static class Categories {
         private static ConfigCategory createBehaviorCategory() {
-            TranslationKey category = getCategory("behavior");
+            TranslationKey category = TranslationKey.getCategory("behavior");
 
             class Groups {
                 static Option<Boolean> shouldSwitchPerspectiveOption;
@@ -234,7 +225,7 @@ public class SettingsGuiFactory {
         }
 
         private static ConfigCategory createControlsCategory() {
-            TranslationKey category = getCategory("controls");
+            TranslationKey category = TranslationKey.getCategory("controls");
 
             class Groups {
                 OptionGroup createBasicGroup() {

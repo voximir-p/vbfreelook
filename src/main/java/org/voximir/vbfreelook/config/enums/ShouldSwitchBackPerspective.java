@@ -1,12 +1,10 @@
 package org.voximir.vbfreelook.config.enums;
 
 import dev.isxander.yacl3.api.NameableEnum;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-import java.util.Locale;
-
-public enum ShouldSwitchBackPerspective implements NameableEnum, StringRepresentable {
+public enum ShouldSwitchBackPerspective implements ConfigEnum, NameableEnum, StringRepresentable {
     ALWAYS,
     IF_UNCHANGED,
     NEVER;
@@ -15,12 +13,7 @@ public enum ShouldSwitchBackPerspective implements NameableEnum, StringRepresent
             StringRepresentable.fromEnum(ShouldSwitchBackPerspective::values);
 
     @Override
-    public Component getDisplayName() {
-        return Component.translatable("config.vbfreelook.enum.should_switch_back_perspective." + getSerializedName());
-    }
-
-    @Override
-    public String getSerializedName() {
-        return name().toLowerCase(Locale.ROOT);
+    public String getTranslationKey() {
+        return "should_switch_back_perspective";
     }
 }

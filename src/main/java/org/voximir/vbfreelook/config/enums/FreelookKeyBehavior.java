@@ -1,12 +1,10 @@
 package org.voximir.vbfreelook.config.enums;
 
 import dev.isxander.yacl3.api.NameableEnum;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-import java.util.Locale;
-
-public enum FreelookKeyBehavior implements NameableEnum, StringRepresentable {
+public enum FreelookKeyBehavior implements ConfigEnum, NameableEnum, StringRepresentable {
     SMART,
     HOLD,
     TOGGLE;
@@ -15,12 +13,7 @@ public enum FreelookKeyBehavior implements NameableEnum, StringRepresentable {
             StringRepresentable.fromEnum(FreelookKeyBehavior::values);
 
     @Override
-    public Component getDisplayName() {
-        return Component.translatable("config.vbfreelook.enum.freelook_key_behavior." + getSerializedName());
-    }
-
-    @Override
-    public String getSerializedName() {
-        return name().toLowerCase(Locale.ROOT);
+    public String getTranslationKey() {
+        return "freelook_key_behavior";
     }
 }

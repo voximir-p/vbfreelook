@@ -3,13 +3,11 @@ package org.voximir.vbfreelook.config.enums;
 import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
+import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-import java.util.Locale;
-
-public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
+public enum SwitchBackPerspective implements ConfigEnum, NameableEnum, StringRepresentable {
     ORIGINAL,
     FIRST_PERSON,
     THIRD_PERSON,
@@ -19,13 +17,8 @@ public enum SwitchBackPerspective implements NameableEnum, StringRepresentable {
             StringRepresentable.fromEnum(SwitchBackPerspective::values);
 
     @Override
-    public Component getDisplayName() {
-        return Component.translatable("config.vbfreelook.enum.switch_back_perspective." + getSerializedName());
-    }
-
-    @Override
-    public String getSerializedName() {
-        return name().toLowerCase(Locale.ROOT);
+    public String getTranslationKey() {
+        return "switch_back_perspective";
     }
 
     public CameraType asCameraType() {
