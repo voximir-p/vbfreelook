@@ -6,18 +6,24 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.glfw.GLFW;
+import org.voximir.vbfreelook.VBFreelook;
 import org.voximir.vbfreelook.config.SettingsGuiFactory;
 import org.voximir.vbfreelook.freelook.FreelookState;
 
-public class InputHandler {
+public final class InputHandler {
+    private static final String KEY_TRANSLATION_PREFIX = "key." + VBFreelook.MOD_ID + ".";
+
     public static KeyMapping FREELOOK_KEY;
     public static KeyMapping SETTINGS_KEY;
 
     private static boolean wasFreelookKeyDown = false;
 
+    private InputHandler() {
+    }
+
     public static void registerKeys() {
-        FREELOOK_KEY = registerKey("freelook", GLFW.GLFW_KEY_LEFT_ALT, KeyCategories.VBFREELOOK);
-        SETTINGS_KEY = registerKey("settings", GLFW.GLFW_KEY_F12, KeyCategories.VBFREELOOK);
+        FREELOOK_KEY = registerKey("freelook", GLFW.GLFW_KEY_LEFT_ALT, KeyCategories.VBFREELOOK_CATEGORY);
+        SETTINGS_KEY = registerKey("settings", GLFW.GLFW_KEY_F12, KeyCategories.VBFREELOOK_CATEGORY);
     }
 
     public static void registerEvents() {
@@ -48,6 +54,8 @@ public class InputHandler {
     }
 
     private static KeyMapping registerKey(String id, int code, KeyMapping.Category category) {
-        return KeyMappingHelper.registerKeyMapping(new KeyMapping("key.vbfreelook." + id, InputConstants.Type.KEYSYM, code, category));
+        return KeyMappingHelper.registerKeyMapping(
+                new KeyMapping(KEY_TRANSLATION_PREFIX + id, InputConstants.Type.KEYSYM, code, category)
+        );
     }
 }

@@ -4,10 +4,13 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
 import org.voximir.vbfreelook.VBFreelook;
 
-public class KeyCategories {
-    public static KeyMapping.Category VBFREELOOK;
+public final class KeyCategories {
+    public static KeyMapping.Category VBFREELOOK_CATEGORY;
+
+    private KeyCategories() {
+    }
 
     public static void registerCategories() {
-        VBFREELOOK = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(VBFreelook.MOD_ID, VBFreelook.MOD_ID));
+        VBFREELOOK_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(VBFreelook.MOD_ID, VBFreelook.MOD_ID));
     }
 }
