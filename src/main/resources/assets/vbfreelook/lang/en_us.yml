@@ -113,9 +113,8 @@ config.vbfreelook:
       smart: Smart
       toggle: Toggle
 
-key:
-  category.vbfreelook:
-    vbfreelook: Voximir's Better Freelook
-  vbfreelook:
+key.category.vbfreelook:
+  vbfreelook: Voximir's Better Freelook
+key.vbfreelook:
     freelook: Freelook
     settings: Freelook Settings
