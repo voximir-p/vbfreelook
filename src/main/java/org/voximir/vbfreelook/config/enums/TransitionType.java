@@ -1,11 +1,10 @@
 package org.voximir.vbfreelook.config.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.utilities.ConfigEnum;
 import org.voximir.vbfreelook.utilities.Transition;
 
-public enum TransitionType implements Transition, ConfigEnum, NameableEnum, StringRepresentable {
+public enum TransitionType implements Transition, ConfigEnum {
     LINEAR {
         @Override
         public double apply(double t) {

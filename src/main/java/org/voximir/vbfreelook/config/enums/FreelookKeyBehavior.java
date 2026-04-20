@@ -1,10 +1,9 @@
 package org.voximir.vbfreelook.config.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-public enum FreelookKeyBehavior implements ConfigEnum, NameableEnum, StringRepresentable {
+public enum FreelookKeyBehavior implements ConfigEnum {
     SMART,
     HOLD,
     TOGGLE;

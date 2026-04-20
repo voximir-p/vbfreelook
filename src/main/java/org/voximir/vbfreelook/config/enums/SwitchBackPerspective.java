@@ -1,13 +1,12 @@
 package org.voximir.vbfreelook.config.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
 import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-public enum SwitchBackPerspective implements ConfigEnum, NameableEnum, StringRepresentable {
+public enum SwitchBackPerspective implements ConfigEnum {
     ORIGINAL,
     FIRST_PERSON,
     THIRD_PERSON,
@@ -31,11 +30,11 @@ public enum SwitchBackPerspective implements ConfigEnum, NameableEnum, StringRep
     }
 
     public static void switchBackPerspective(Minecraft client, CameraType lastPerspective) {
-        var switchBackPerspective = VBFreelookSettings.getInstance().getSwitchBackPerspective().get().asCameraType();
-        if (switchBackPerspective == null) {
+        var targetPerspective = VBFreelookSettings.getInstance().getSwitchBackPerspective().get().asCameraType();
+        if (targetPerspective == null) {
             client.options.setCameraType(lastPerspective);
         } else {
-            client.options.setCameraType(switchBackPerspective);
+            client.options.setCameraType(targetPerspective);
         }
     }
 }

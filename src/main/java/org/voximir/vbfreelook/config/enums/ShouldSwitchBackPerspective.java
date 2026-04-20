@@ -1,10 +1,9 @@
 package org.voximir.vbfreelook.config.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-public enum ShouldSwitchBackPerspective implements ConfigEnum, NameableEnum, StringRepresentable {
+public enum ShouldSwitchBackPerspective implements ConfigEnum {
     ALWAYS,
     IF_UNCHANGED,
     NEVER;

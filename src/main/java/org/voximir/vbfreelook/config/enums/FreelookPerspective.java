@@ -1,11 +1,10 @@
 package org.voximir.vbfreelook.config.enums;
 
-import dev.isxander.yacl3.api.NameableEnum;
 import net.minecraft.client.CameraType;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.utilities.ConfigEnum;
 
-public enum FreelookPerspective implements ConfigEnum, NameableEnum, StringRepresentable {
+public enum FreelookPerspective implements ConfigEnum {
     THIRD_PERSON,
     FIRST_PERSON,
     SECOND_PERSON;
