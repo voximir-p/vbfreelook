@@ -173,13 +173,15 @@ public class SettingsGuiFactory {
 
                     bindDependentsAvailability(
                             shouldSwitchPerspectiveOption,
-                            List.of(zoomOutTimeOption),
+                            List.of(zoomOutTimeOption,
+                                    zoomOutTransitionOption),
                             Boolean::booleanValue
                     );
 
                     bindDependentsAvailability(
                             freelookPerspectiveOption,
-                            List.of(zoomOutTimeOption),
+                            List.of(zoomOutTimeOption,
+                                    zoomOutTransitionOption),
                             val -> val != FreelookPerspective.FIRST_PERSON
                     );
 
