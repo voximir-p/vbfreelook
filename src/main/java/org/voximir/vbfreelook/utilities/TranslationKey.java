@@ -5,7 +5,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
 import org.voximir.vbfreelook.VBFreelook;
 
-public class TranslationKey {
+public final class TranslationKey {
     private final TranslationKey parent;
     private final String part;
     private String cached;
@@ -61,14 +61,14 @@ public class TranslationKey {
     }
 
     public static TranslationKey getConfigFor(String key) {
-        return TranslationKey.of("config", VBFreelook.MOD_ID, key);
+        return of("config", VBFreelook.MOD_ID, key);
     }
 
     public static TranslationKey getCategory(String key) {
-        return TranslationKey.getConfigFor("category").dot(key);
+        return getConfigFor("category").dot(key);
     }
 
     public static TranslationKey getEnum(String key) {
-        return TranslationKey.getConfigFor("enum").dot(key);
+        return getConfigFor("enum").dot(key);
     }
 }
