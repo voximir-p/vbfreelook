@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.voximir.vbfreelook.config.VBFreelookSettings;
+import org.voximir.vbfreelook.config.enums.FreelookPerspective;
 import org.voximir.vbfreelook.config.enums.TransitionType;
 import org.voximir.vbfreelook.freelook.CameraStateAccessor;
 import org.voximir.vbfreelook.freelook.FreelookState;
@@ -73,8 +74,10 @@ public abstract class CameraMixin {
         boolean isLocalPlayer = this.entity instanceof LocalPlayer;
         boolean isFreelookActive = FreelookState.isActive();
         boolean isOriginalCloser = original > -minCameraDist;
+        boolean isFreelookPerspectiveFirstPerson =
+                VBFreelookSettings.getInstance().getFreelookPerspective().get() == FreelookPerspective.FIRST_PERSON;
 
-        if (!isLocalPlayer || !isFreelookActive || isOriginalCloser) {
+        if (!isLocalPlayer || !isFreelookActive || isOriginalCloser || isFreelookPerspectiveFirstPerson) {
             return original;
         }
 
@@ -87,9 +90,10 @@ public abstract class CameraMixin {
     @Inject(method = "getMaxZoom", at = @At("HEAD"), cancellable = true)
     private void disableCollisionCheck(float cameraDist, CallbackInfoReturnable<Float> cir) {
         boolean isLocalPlayer = this.entity instanceof LocalPlayer;
+        boolean isFreelookActive = FreelookState.isActive();
         boolean isCameraNoClipEnabled = VBFreelookSettings.getInstance().getCameraNoClip().get();
 
-        if (isLocalPlayer && isCameraNoClipEnabled) {
+        if (isLocalPlayer && isFreelookActive && isCameraNoClipEnabled) {
             cir.setReturnValue(cameraDist);
         }
     }
